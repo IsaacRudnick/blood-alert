@@ -1,1 +1,3 @@
-login.ejs takes a response from login_post that tells it if redirect or no. The browser isn't getting this. Why? fix.
+Figure out if session-token (made by googleUser.getAuthResponse().id_token) is permanent. 
+    If so, use JWT (which has expiry)
+    If not, no change. 

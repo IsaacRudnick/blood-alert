@@ -40,8 +40,8 @@
                 },
                 body: JSON.stringify({ id_token }),
             }).then((res) => {
-                if (res.text == "success"){
-                    location.assign("/profile")
+                if (res.redirected == true){
+                    location.assign(res.url)
                 }
                 console.log(res)
             });
