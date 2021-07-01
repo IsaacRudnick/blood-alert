@@ -1,0 +1,1 @@
+login.ejs takes a response from login_post that tells it if redirect or no. The browser isn't getting this. Why? fix.
