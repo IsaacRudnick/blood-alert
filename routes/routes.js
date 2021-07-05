@@ -1,11 +1,13 @@
 const express = require('express');
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 const controller = require('../controllers/controller');
 const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
 
-const router = express.Router();  
+const router = express.Router();
 
 function checkAuthenticated(req, res, next) {
 
@@ -15,7 +17,7 @@ function checkAuthenticated(req, res, next) {
     async function verify() {
         const ticket = await client.verifyIdToken({
             idToken: token,
-            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend 
         });
         const payload = ticket.getPayload();
         user.name = payload.name;

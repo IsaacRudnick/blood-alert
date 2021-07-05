@@ -40,11 +40,11 @@
                 },
                 body: JSON.stringify({ id_token }),
             }).then((res) => {
-                if (res.redirected == true){
+                if (res.redirected == true) {
                     location.assign(res.url)
                 }
                 console.log(res)
-            });
+            }).catch((err) => console.log(err));
         }
     </script>
 
