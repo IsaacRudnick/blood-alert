@@ -5,18 +5,20 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     // user email
     email: { type: String },
-    // users phone number
+    // user's phone number
     phoneNumber: { type: String },
-    // which numbers to text if user doesn't respond (family, friends, etc.) Emergency Contact Phone Number
-    ECphoneNumbers: { type: Array },
-    // how long out-of-range readings must continue before user is texted to make sure they're ok
-    textUserAfter: { type: String },
-    // whether to keep checking on user every textUserAfter minutes until in-range or no response
-    keepTextingUser: { type: Boolean },
     // low threshhold for user
     lowValue: { type: String },
     // high threshold for user
     highValue: { type: String },
+    // which numbers to text if user doesn't respond (family, friends, etc.) Emergency Contact Phone Number
+    // Key is name and value is phone number. For example, 
+    // { "John": "+1 123-456-7890", "Greg": "+1 222-333-4444" }
+    ECphoneNumbers: { type: Object },
+    // how long out-of-range readings must continue before ECs are texted with alert
+    textECsAfter: { type: String },
+    // How long to wait before checking on user again. Minutes
+    UserOkSnooze: {type: Number},
     //user data source (NS such as example-bg.herokuapp.com/)
     userDataSource: { type: String }
 },
