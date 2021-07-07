@@ -12,12 +12,12 @@ const login_get = (req, res) => { res.render('login', { title: 'Login' }); };
 const signin_get = (req, res) => { res.render('signup', { title: 'Signup' }); };
 
 const profile_get = (req, res) => {
-  console.log(req.user.email);
-  res.render('profile', { title: 'Profile', email: req.user.email });
+  console.log(req.email)
+  res.render('profile', { title: 'Profile', email: req.email });
 };
 
 const logout_get = (req, res) => {
-  res.clearCookie("session-token");
+  res.clearCookie("JWT");
   res.redirect("/login");
 };
 
@@ -28,20 +28,18 @@ const login_post = (req, res) => {
   async function verify() {
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend 
+      audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
     });
     const payload = ticket.getPayload();
-    // console.log(ticket.payload.email) // User email 
-    const userid = payload['sub'];
+    return payload;
   }
 
 
   verify()
-    .then(() => {
-
-      res.cookie('session-token', token);
-      res.redirect('/profile')
-      // res.send('success'); 
+    .then((payload) => {
+      jwt_token = jwt.sign({ email: payload.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
+      res.cookie('JWT', jwt_token);
+      res.redirect('/profile');
     })
     .catch(console.error);
 

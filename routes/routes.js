@@ -9,31 +9,23 @@ const client = new OAuth2Client(CLIENT_ID);
 
 const router = express.Router();
 
-function checkAuthenticated(req, res, next) {
+function authenticateToken(req, res, next) {
+    const authHeader = req.cookies['JWT'];
+    const token = authHeader
+    if (token == null) return res.redirect('/login');
 
-    let token = req.cookies['session-token'];
 
-    let user = {};
-    async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend 
-        });
-        const payload = ticket.getPayload();
-        user.name = payload.name;
-        user.email = payload.email;
-        user.picture = payload.picture;
-    }
-    verify()
-        .then(() => {
-            req.user = user;
-            next();
-        })
-        .catch(err => {
+    // Verifies token and assigns decrypted email to user.email
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
             console.log("User not logged in, redirecting");
-            res.redirect('/login')
-        })
+            res.redirect('/login');
+        }
 
+        // If no error, assign user to req.user
+        req.email = decoded.email;
+        next();
+    })
 }
 
 // GET requests
@@ -42,7 +34,7 @@ router.get('/login', controller.login_get);
 router.get('/signin', controller.signin_get);
 router.get('/logout', controller.logout_get);
 
-router.get('/profile', checkAuthenticated, controller.profile_get);
+router.get('/profile', authenticateToken, controller.profile_get);
 
 
 // POST requests

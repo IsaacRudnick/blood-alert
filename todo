@@ -1,8 +1,3 @@
-Figure out if session-token (made by googleUser.getAuthResponse().id_token) is permanent. 
-    If so, use JWT (which has expiry)
-        pass user to req.user like currently doing in session-token authorization
-    If not, no change. 
-
 Profile page form doesn't send CSRF token, since it's normally a header and forms don't seem to be able to
 
-routes.js/checkAuthenticated creates req.user.email which is going to be JWT's auth.
+Create firebase email sign in 
