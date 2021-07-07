@@ -39,19 +39,31 @@
 
         <h1>Settings</h1>
         <form action="/profile" method="POST">
-            <input type="hidden" name="_csrf" value=document.cookie.XSRF-TOKEN>
+            <input type="hidden" name="_csrf" value="<%= csrftoken %>">
 
-            <label for="TUA">Sustained out of range limit:</label><br>
-            <input type="text" id="TUA" name="TUA" value="30"><br>
+            <label for="phoneNumber">Your phone number:</label><br>
+            <input type="text" id="phoneNumber" name="phoneNumber" value="+1 333-444-5555"><br>
 
-            <label for="HV">Upper BG limit:</label><br>
-            <input type="text" id="HV" name="HV" value="300"><br>
+            <label for="highValue">Upper BG limit:</label><br>
+            <input type="text" id="highValue" name="highValue" value="300"><br>
 
-            <label for="LV">Lower BG limit:</label><br>
-            <input type="text" id="LV" name="LV" value="50"><br>
+            <!-- <label for="lowValue">Lower BG limit:</label><br>
+            <input type="text" id="lowValue" name="lowValue" value="50"><br> -->
+
+            <label for="ECphoneNumbers">Emergency Contact Phone Numbers:</label><br>
+            <input type="text" id="ECphoneNumbers" name="ECphoneNumbers" value="+1 123-456-7890"><br>
+
+            <label for="textECsAfter">how long to wait for a response before texting your emergency contacts</label><br>
+            <input type="text" id="textECsAfter" name="textECsAfter" value="30"><br>
+
+            <label for="userOkSnooze">how long to wait to wait before checking on you again</label><br>
+            <input type="text" id="userOkSnooze" name="userOkSnooze" value="60"><br>
+
+            <label for="userDataSource">your NS link</label><br>
+            <input type="text" id="userOkSnooze" name="userOkSnooze" value="example-bg.herokuapp.com/"><br>
 
 
-            <button onclick=submit()>submit</button>
+            <button type="submit">submit</button>
 
         </form>
 

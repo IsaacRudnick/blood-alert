@@ -35,6 +35,8 @@ app.use(csrfMiddleWare);
 // Takes any requests and creates a cookie with csrf cookie
 app.all('*', (req, res, next) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
+    // Sets a local value for use when rendering profile.ejs form.
+    res.locals.csrftoken = req.csrfToken();
     // passes to next middleware
     next();
 });

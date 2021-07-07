@@ -36,9 +36,10 @@ router.get('/logout', controller.logout_get);
 
 router.get('/profile', authenticateToken, controller.profile_get);
 
-
 // POST requests
 router.post('/login', controller.login_post);
+
+router.post('/profile', authenticateToken, controller.profile_post)
 
 //404 (Final route)
 router.use((req, res) => { res.status(404).render('404', { title: '404' }); });
