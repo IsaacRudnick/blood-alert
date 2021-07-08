@@ -1,3 +1,1 @@
-Profile page form doesn't send CSRF token, since it's normally a header and forms don't seem to be able to
-
-Create firebase email sign in 
+Validate profile_post form input (Make sure they can only change allowed fields)

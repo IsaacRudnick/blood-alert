@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
         }
 
         // If no error, assign user to req.user
-        req.email = decoded.email;
+        req.id = decoded.id;
         next();
     })
 }
@@ -31,7 +31,6 @@ function authenticateToken(req, res, next) {
 // GET requests
 router.get('/', controller.index_get);
 router.get('/login', controller.login_get);
-router.get('/signin', controller.signin_get);
 router.get('/logout', controller.logout_get);
 
 router.get('/profile', authenticateToken, controller.profile_get);
