@@ -9,7 +9,7 @@ const routes = require('./routes/routes.js');
 
 
 const app = express();
-const csrfMiddleWare = csrf({ cookie: true })
+const csrfMiddleWare = csrf({ cookie: true });
 
 // connect to mongodb & listen for requests
 const dbURI = process.env.DBURI;

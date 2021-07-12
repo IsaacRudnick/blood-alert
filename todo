@@ -1,4 +1,3 @@
-Validate profile_post form input (Make sure they can only change allowed fields)
-
+Check profile.ejs form input client-side before sending to server
 
 Add consoleWarn.js to header. (currently commented out for development)

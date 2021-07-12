@@ -16,7 +16,8 @@
     "express": "^4.17.1",
     "google-auth-library": "^7.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.2"
+    "mongoose": "^5.13.2",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

@@ -11,9 +11,8 @@ const userSchema = new Schema({
     highValue: { type: Number },
     // low threshhold for user
     lowValue: { type: String },
-    // which numbers to text if user doesn't respond (family, friends, etc.) Emergency Contact Phone Number
-    // Key is name and value is phone number. For example, 
-    ECphoneNumbers: { type: Array },
+    // which number to text if user doesn't respond (family, friend, etc.) Emergency Contact Phone Number
+    ECphoneNumber: { type: String },
     // how long out-of-range readings must continue before ECs are texted with alert
     textECsAfter: { type: String },
     // How long to wait before checking on user again. Minutes

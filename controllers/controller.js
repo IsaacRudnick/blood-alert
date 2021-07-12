@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 const mongoose = require('mongoose');
 const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com';
@@ -8,7 +9,10 @@ const User = require('../models/user');
 //ROUTING
 
 // GET REQUESTS
-const index_get = (req, res) => { res.render('index', { title: 'Home' }) };
+const index_get = (req, res) => {
+  console.log(req)
+  res.render('index', { title: 'Home' })
+};
 
 const login_get = (req, res) => { res.render('login', { title: 'Login' }) };
 
@@ -50,14 +54,23 @@ const login_post = (req, res) => {
 };
 
 const profile_post = (req, res) => {
+  // For simplicity and cleaner debugging.
   delete req.body['_csrf'];
-  delete req.body['email'];
 
+  phoneNumber = req.body.phoneNumber;
+  highValue = req.body.highValue;
+  lowValue = req.body.lowValue;
+  ECphoneNumber = req.body.ECphoneNumber;
+  textECAfter = req.body.textECAfter;
+  userOkSnooze = req.body.userOkSnooze;
+  userDataSource = req.body.userDataSource;
 
-  //Verify input is valid
+  console.log(req.body)
+
   // Update database
-
   async function updateUser() {
+
+    email = req.email
 
     options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
@@ -66,11 +79,28 @@ const profile_post = (req, res) => {
         console.log(err)
       }
       else {
-        console.log("Updated user: ", docs)
+        console.log("Updated user: ", docs);
+        res.render("profile", { title: "Profile", email: req.email });
       }
     })
   }
-  updateUser()
+  console.log(validator.isMobilePhone(ECphoneNumber, 'any', { strictMode: true }));
+  // Only call updateUser if all checks pass
+  if (
+    validator.isMobilePhone(phoneNumber, 'any', { strictMode: true }) &&
+    validator.isInt(highValue, { min: 1, max: 400 }) &&
+    validator.isInt(lowValue, { min: 1, max: 400 }) &&
+    validator.isMobilePhone(ECphoneNumber, 'any', { strictMode: true }) &&
+    validator.isInt(textECAfter) &&
+    validator.isInt(userOkSnooze) &&
+    validator.isURL(userDataSource) && validator.contains(userDataSource, ".herokuapp.com")
+  ) {
+    updateUser();
+  }
+  else {
+    res.send("There appears to be an error with your form. Please reach out via email for assistance.");
+  }
+
 };
 
 

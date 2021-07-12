@@ -10,19 +10,18 @@ const client = new OAuth2Client(CLIENT_ID);
 const router = express.Router();
 
 function authenticateToken(req, res, next) {
-    const authHeader = req.cookies['JWT'];
-    const token = authHeader
+    const token = req.cookies['JWT'];
     if (token == null) return res.redirect('/login');
 
 
-    // Verifies token and assigns decrypted email to user.email
+    // Verifies token. redirect to /login if error.
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
             console.log("User not logged in, redirecting");
             res.redirect('/login');
         }
 
-        // If no error, assign user to req.user
+        // If no error, assign id to req.id
         req.id = decoded.id;
         next();
     })
