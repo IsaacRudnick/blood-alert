@@ -63,16 +63,14 @@ const profile_post = (req, res) => {
   userOkSnooze = req.body.userOkSnooze;
   userDataSource = req.body.userDataSource;
 
-  console.log(req.body)
-
   // Update database
-  async function updateUser() {
+  async function updateUser(data) {
 
     email = req.email
 
     options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    await User.findByIdAndUpdate(req.id, req.body, options, (err, docs) => {
+    await User.findByIdAndUpdate(req.id, data, options, (err, docs) => {
       if (err) {
         console.log(err)
       }
@@ -82,7 +80,6 @@ const profile_post = (req, res) => {
       }
     })
   }
-  console.log(validator.isMobilePhone(ECphoneNumber, 'any', { strictMode: true }));
   // Only call updateUser if all checks pass
   if (
     validator.isMobilePhone(phoneNumber, 'any', { strictMode: true }) &&
@@ -93,10 +90,20 @@ const profile_post = (req, res) => {
     validator.isInt(userOkSnooze) &&
     validator.isURL(userDataSource) && validator.contains(userDataSource, ".herokuapp.com")
   ) {
-    updateUser();
+    //Creates new object so client can't pass extra fields (add spam to req.body fields which would then go to DB)
+    var valid_input = {};
+    valid_input.phoneNumber = phoneNumber;
+    valid_input.highValue = highValue;
+    valid_input.lowValue = lowValue;
+    valid_input.ECphoneNumber = ECphoneNumber;
+    valid_input.textECAfter = textECAfter;
+    valid_input.userOkSnooze = userOkSnooze;
+    valid_input.userDataSource = userDataSource;
+
+    updateUser(valid_input);
   }
   else {
-    res.send("There appears to be an error with your form. Please reach out via email for assistance.");
+    res.send("There appears to be an error with your form. Please reach out via email for assistance. ");
   }
 
 };
