@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const mongoose = require('mongoose');
 const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com';
 const client = new OAuth2Client(CLIENT_ID);
@@ -10,7 +9,6 @@ const User = require('../models/user');
 
 // GET REQUESTS
 const index_get = (req, res) => {
-  console.log(req)
   res.render('index', { title: 'Home' })
 };
 

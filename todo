@@ -1,3 +1,8 @@
 Check profile.ejs form input client-side before sending to server
+    Time to go for bootstrap I guess
+        THEREFORE:
+Add bootstrap to all EJS files. 
+
+Strip extra req.body data besides form from profile_posts. (So users can't add arbitrary fields to DB.)
 
 Add consoleWarn.js to header. (currently commented out for development)
