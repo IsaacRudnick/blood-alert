@@ -44,7 +44,8 @@ const login_post = (req, res) => {
   verify()
     .then((user) => {
       jwt_token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3d' });
-      res.cookie('JWT', jwt_token);
+      // {secure: true} for production. 
+      res.cookie('JWT', jwt_token, { httpOnly: true });
       res.redirect('/profile');
     })
     .catch(console.error);

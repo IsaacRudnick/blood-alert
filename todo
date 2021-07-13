@@ -3,4 +3,7 @@ Check profile.ejs form input client-side before sending to server
         THEREFORE:
 Add bootstrap to all EJS files. 
 
-Add consoleWarn.js to header. (currently commented out for development)
+
+For production: 
+    Add consoleWarn.js to header. (currently commented out for development)
+    Add secureOnly attribute to JWT cookie creation response (login_post)
