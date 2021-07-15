@@ -41,5 +41,9 @@ app.all('*', (req, res, next) => {
     next();
 });
 
+
+//For form validation
+app.use('/validator.min.js', express.static(__dirname + '/node_modules/validator/validator.min.js'));
+
 // passes all requests to router.
 app.use('', routes);
