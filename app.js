@@ -14,7 +14,7 @@ const csrfMiddleWare = csrf({ cookie: true });
 // connect to mongodb & listen for requests
 const dbURI = process.env.DBURI;
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(result => app.listen(3000))
     .catch(err => console.log(err));
 // register view engine
