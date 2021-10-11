@@ -7,7 +7,6 @@ const csrf = require('csurf');
 require('dotenv').config();
 const routes = require('./routes/routes.js');
 
-
 const app = express();
 const csrfMiddleWare = csrf({ cookie: true });
 
