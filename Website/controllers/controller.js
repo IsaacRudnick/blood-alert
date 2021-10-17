@@ -67,10 +67,6 @@ const profile_post = (req, res) => {
   // Update database
   async function updateUser(data) {
 
-    email = req.email
-
-    options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
     await User.findByIdAndUpdate(req.id, data, options, (err, docs) => {
       if (err) {
         console.log(err)
@@ -79,7 +75,7 @@ const profile_post = (req, res) => {
         console.log("Updated user: ", docs);
         res.render("profile", { title: "Profile", email: req.email });
       }
-    })
+    }).clone().catch(function(err){ console.log(err)})
   }
   // Only call updateUser if all checks pass
   if (
@@ -101,6 +97,9 @@ const profile_post = (req, res) => {
     valid_input.userOkSnooze = userOkSnooze;
     valid_input.userDataSource = userDataSource;
 
+
+    email = req.email
+    options = { upsert: true, new: true, setDefaultsOnInsert: true };
     updateUser(valid_input);
   }
   else {

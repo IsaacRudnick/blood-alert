@@ -2,7 +2,7 @@
   "name": "blood-alert",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,7 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "validator": "^13.6.0",
-    "yarn": "^1.22.15"
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
