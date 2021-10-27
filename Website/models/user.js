@@ -10,7 +10,7 @@ const userSchema = new Schema({
     // high threshold for user
     highValue: { type: Number },
     // low threshhold for user
-    lowValue: { type: String },
+    lowValue: { type: Number },
     // which number to text if user doesn't respond (family, friend, etc.) Emergency Contact Phone Number
     ECphoneNumber: { type: String },
     // how long out-of-range readings must continue before ECs are texted with alert
