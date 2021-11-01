@@ -1,4 +1,5 @@
 Check profile.ejs form input client-side before sending to server
+Autofill profile.ejs form input using user's DB data. 
 
 For production: 
     Add consoleWarn.js to header. (currently commented out for development)
