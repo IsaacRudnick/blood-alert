@@ -3,23 +3,20 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 import urllib.request
 import json
-
-# For async scheduling
-import asyncio
-import aioschedule as schedule
-import time
+import threading
+import schedule
 
 load_dotenv()
 
 # Returns dictionary of user's data
-async def user_check(user): 
+def user_check(user): 
     url = f"https://{user['userDataSource']}/api/v2/entries.json?count=1"
     try: 
         with urllib.request.urlopen(url) as response:
             data = json.loads(response.read())[0]
             return data['sgv']
             
-    # Retries if there's an error. 
+    # Retries if there's an error.
     except:
         print("(Connection) error; retrying")
         return False
@@ -29,9 +26,8 @@ async def check_all():
     # Connect to MongoDB -> get database 'blood sugar alert' -> get collection 'users'
     users = MongoClient(env('DBURI') + "&ssl_cert_reqs=CERT_NONE")['blood-sugar-alert']['users']
 
-
     for user in users.find():
-        user_bg = await user_check(user) 
+        user_bg = user_check(user)
         
         # Report user BG
         if user_bg <= user['lowValue']:
@@ -43,13 +39,10 @@ async def check_all():
         else:
             print(f"{user['email']}'s BG is normal ({user_bg} mg/dL)")
             
-
-
+        
 # Run checker every 5 minutes
-schedule.every(.5).minutes.do(check_all)
-
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-
+schedule.every(5).minutes.do(lambda: threading.Thread(target=check_all).start())
+    
 while True:
-    loop.run_until_complete(schedule.run_pending())
+    schedule.run_pending()
+    
