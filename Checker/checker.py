@@ -22,7 +22,7 @@ def user_check(user):
         return False
 
 # This function checks every user's BG bg and prints whether it's above, below, or within their target range.
-async def check_all():
+def check_all():
     # Connect to MongoDB -> get database 'blood sugar alert' -> get collection 'users'
     users = MongoClient(env('DBURI') + "&ssl_cert_reqs=CERT_NONE")['blood-sugar-alert']['users']
 
@@ -41,8 +41,7 @@ async def check_all():
             
         
 # Run checker every 5 minutes
-schedule.every(5).minutes.do(lambda: threading.Thread(target=check_all).start())
+schedule.every(.1).minutes.do(lambda: threading.Thread(target=check_all).start())
     
 while True:
     schedule.run_pending()
-    
