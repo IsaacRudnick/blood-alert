@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
-const logger = require('morgan');
+// const logger = require('morgan');
 const mongoose = require('mongoose');
 const csrf = require('csurf');
 
