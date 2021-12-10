@@ -19,7 +19,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // register view engine
 app.set('view engine', 'ejs');
 // show incoming requests in console.
-app.use(logger('dev')); 
+// app.use(logger('dev')); 
 // sets public folder (css, images, browser/client js, etc.)
 app.use(express.static('public')); 
 // used to parse JSON bodies and replaces deprecated body-parser
