@@ -14,22 +14,22 @@ const csrfMiddleWare = csrf({ cookie: true });
 const dbURI = process.env.DBURI;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(result => app.listen(process.env.PORT))
-    .catch(err => console.log(err));
+    .then(result => app.listen(8080)) // listen for requests
+    .catch(err => console.log(err)); // log any errors
 // register view engine
 app.set('view engine', 'ejs');
 // show incoming requests in console.
-app.use(logger('dev'));
+app.use(logger('dev')); 
 // sets public folder (css, images, browser/client js, etc.)
-app.use(express.static('public'));
+app.use(express.static('public')); 
 // used to parse JSON bodies and replaces deprecated body-parser
 app.use(express.json());
 // allows url encoding
 app.use(express.urlencoded({ extended: true }));
 // able to read cookies
 app.use(cookieParser());
-// include CSRF middleware
-app.use(csrfMiddleWare);
+// include CSRF middleware. This stops CSRF attacks. 
+app.use(csrfMiddleWare); 
 
 // Takes any requests and creates a cookie with csrf cookie
 app.all('*', (req, res, next) => {
