@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
-// const logger = require('morgan');
+const logger = require('morgan');
 const mongoose = require('mongoose');
 const csrf = require('csurf');
 
@@ -19,7 +19,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // register view engine
 app.set('view engine', 'ejs');
 // show incoming requests in console.
-// app.use(logger('dev')); 
+app.use(logger('dev')); 
 // sets public folder (css, images, browser/client js, etc.)
 app.use(express.static('public')); 
 // used to parse JSON bodies and replaces deprecated body-parser

@@ -23,7 +23,7 @@ const profile_get = (req, res) => { res.render('profile', { title: 'Profile', em
 
 // POST REQUESTS
 const login_post = (req, res) => {
-
+  // For simplicity and cleaner debugging.
   let token = req.body.id_token;
 
   async function verify() {
