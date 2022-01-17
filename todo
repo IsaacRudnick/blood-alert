@@ -1,8 +1,10 @@
-Check profile.ejs form input client-side before sending to server
-Autofill profile.ejs form input using user's DB data. 
-
 For production: 
     Add consoleWarn.js to header. (currently commented out for development)
 
+Check profile.ejs form input client-side before sending to server
+
+Autofill profile.ejs form input using user's DB data. 
+
 Create back end async texting API
-Create back end async checking
+
+Add token functionality to profile.ejs form

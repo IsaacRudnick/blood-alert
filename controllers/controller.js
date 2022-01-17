@@ -75,7 +75,7 @@ const profile_post = (req, res) => {
         console.log("Updated user: ", docs);
         res.render("profile", { title: "Profile", email: req.email });
       }
-    }).clone().catch(function(err){ console.log(err)})
+    }).clone().catch(function (err) { console.log(err) })
   }
   // Only call updateUser if all checks pass
   if (
