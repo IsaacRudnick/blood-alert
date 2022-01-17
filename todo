@@ -8,3 +8,5 @@ Autofill profile.ejs form input using user's DB data.
 Create back end async texting API
 
 Add token functionality to profile.ejs form
+
+Created users that have not added their profile yet should be caught in app.js
