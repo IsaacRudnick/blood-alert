@@ -103,7 +103,7 @@ const profile_post = (req, res) => {
     updateUser(valid_input);
   }
   else {
-    res.send("There appears to be an error with your form. Please reach out via email for assistance. ");
+    res.send("There appears to be an error with your form. Please reach out via email for assistance.");
   }
 
 };
