@@ -8,6 +8,12 @@ Autofill profile.ejs form input using user's DB data.
 Create back end async texting API
     SMS API (maybe at sms.url.com - https://www.npmjs.com/package/express-subdomain)
 
-Add token functionality to profile.ejs form
+Add token functionality to profile.ejs form / checker 
 
-Created users that have not added their profile yet should be caught in app.js
+Created users that have not added their profile yet should be caught in checker.js
+
+<!-- CURRENT ISSUES WITH CHECKER -->
+ Where is textECsAfter in DB? It's not getting there
+ need to setTimeout for textECs job and then be able to cancel
+ need to hear back from client/user
+ need to figure out how I want to do the startTime. Time of reading, maybe!
