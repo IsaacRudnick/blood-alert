@@ -5,12 +5,10 @@ const Schema = mongoose.Schema;
 const caseSchema = new Schema({
     // user ID
     userID: { type: String },
-    // ID of case task in scheduler system
-    taskID: { type: Number },
     // type of warning (high, low, OOR, etc.)
     warning: { type: String },
-    // time of warning
-    time: { type: String },
+    // user's phone number
+    userPhone: { type: String },
 },
     { timestamps: true });
 

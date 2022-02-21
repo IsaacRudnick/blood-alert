@@ -19,7 +19,14 @@ const logout_get = (req, res) => {
   res.redirect("/login");
 };
 
-const profile_get = (req, res) => { res.render('profile', { title: 'Profile', email: req.email }) };
+const profile_get = (req, res) => {
+  id = jwt.decode(req.cookies.JWT).id;
+  User.find({ id: id }, (err, user) => {
+    console.log("🚀 ~ file: controller.js ~ line 25 ~ User.find ~ user", user)
+
+    res.render('profile', { title: 'Profile', email: req.email, user: user[0] })
+  })
+};
 
 // POST REQUESTS
 const login_post = (req, res) => {

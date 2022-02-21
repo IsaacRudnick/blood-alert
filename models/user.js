@@ -13,8 +13,8 @@ const userSchema = new Schema({
     lowValue: { type: Number },
     // which number to text if user doesn't respond (family, friend, etc.) Emergency Contact Phone Number
     ECphoneNumber: { type: String },
-    // how long out-of-range readings must continue before ECs are texted with alert
-    textECsAfter: { type: String },
+    // how long out-of-range readings must continue before EC is texted with alert
+    textECAfter: { type: String },
     // How long to wait before checking on user again. Minutes
     userOkSnooze: { type: Number },
     //user data source (NS such as example-bg.herokuapp.com/)
