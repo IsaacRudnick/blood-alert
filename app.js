@@ -46,6 +46,6 @@ app.all('*', (req, res, next) => {
 //For form validation, returns validator.js
 app.use('/validator.min.js', express.static(__dirname + '/node_modules/validator/validator.min.js'));
 
-app.use('sms', sms_routes)
+app.use(subdomain('sms', sms_routes));
 // passes all requests to router.
 app.use('', routes);
