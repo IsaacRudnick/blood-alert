@@ -43,8 +43,8 @@ async function check_all() {
         if (err) { console.log(err) }
         // Only run if user has a data source set up
         for (var i = 0; i < docs.length; i++) {
-            // if (!docs[i].userDataSource) { continue }
             user = docs[i];
+            if (!docs[i].userDataSource) { continue }
             url = "https://" + user.userDataSource + "/api/v2/entries.json"
             fetch(url, { method: "GET" })
                 .then(res => res.json())
