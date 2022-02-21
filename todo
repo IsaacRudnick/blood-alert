@@ -8,6 +8,8 @@ Create back end async texting API
 
 Add token functionality to profile.ejs form / checker 
 
+Fix Twilio webhooks not working. Maybe can't use subdomain???
+
 <!-- CURRENT ISSUES WITH CHECKER -->
  need to setTimeout for textECs job and then be able to cancel
  need to hear back from client/user

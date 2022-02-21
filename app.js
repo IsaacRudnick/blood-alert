@@ -8,6 +8,7 @@ const routes = require('./routes/routes.js');
 const sms_routes = require('./routes/sms_routes.js');
 const app = express();
 const csrfMiddleWare = csrf({ cookie: true });
+var subdomain = require('express-subdomain');
 
 // run checker in background
 const checker = require('./checker/checker')
