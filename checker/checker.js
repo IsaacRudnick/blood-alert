@@ -10,30 +10,47 @@ const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler'
 const scheduler = new ToadScheduler()
 // get JSON from internet
 const fetch = require('node-fetch');
+const { exists } = require('../models/user');
 
 // Begin user check in job
 async function user_warning(user, info) {
-    // client.messages
-    //     .create({ body: `${info.warning} detected. Reply "X" if safe`, from: process.env.PHONE_NUMBER, to: user.phoneNumber })
-    //     .then(message => console.log(message.sid));
-
-    const textECafterTimeoutJob = setTimeout(() => {
-        // Check DB for case
-    }, user.textECAfter)
-
-
-    // must create task object with: startTime, ID to cancel, when to text, 
-    // Create case in DB
-    Case.create({
-        // user ID
-        userID: user._id,
-        // type of warning (high, low, OOR, etc.)
-        warning: info.warning,
-        // user phone number
-        user_phone: user.phoneNumber,
-    })
-    // Text user emergency contact
+    client.messages
+        .create({
+            body: `${info.warning} detected. Reply "X" if safe`,
+            from: process.env.PHONE_NUMBER, to: user.phoneNumber
+        })
+        .then(
+            Case.create({
+                // user ID
+                userID: user._id,
+                // type of warning (high, low, OOR, etc.)
+                warning: info.warning,
+                // user phone number
+                userPhone: user.phoneNumber,
+            },
+                // Create case in DB
+                (err, docs) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log("🚀 ~ file: checker.js ~ line 35 ~ user_warning ~ docs._id", docs._id)
+                    setTimeout(() => {
+                        Case.deleteOne({ _id: docs._id })
+                            .then((case_info) => {
+                                if (case_info.deletedCount == 0) { return }
+                                else {
+                                    client.messages.create({
+                                        body: `${info.warning} detected ${user.textECAfter} minutes ago with no response since.`,
+                                        from: process.env.PHONE_NUMBER, to: user.phoneNumber
+                                    })
+                                        .then(() => { })
+                                }
+                            })
+                    }, user.textECAfter * 60 * 1000)
+                })
+        );
 }
+
 
 // connect to DB and check all values
 async function check_all() {
@@ -51,12 +68,12 @@ async function check_all() {
                 .then(json => {
                     console.log(`${user.email}'s BG is ${json[0]['sgv']}`)
                     if (json[0]['sgv'] > user.highValue) {
-                        // Send low SMS
                         console.log("Sending high SMS")
+                        user_warning(user, { bg_value: json[0]['sgv'], warning: "High blood sugar" })
                     }
                     else if (json[0]['sgv'] < user.lowValue) {
                         console.log("Sending low SMS")
-                        user_warning(user, { bg_value: json[0]['sgv'], warning: "low blood sugar" })
+                        user_warning(user, { bg_value: json[0]['sgv'], warning: "Low blood sugar" })
                     }
                 });
         }
