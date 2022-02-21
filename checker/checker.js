@@ -14,54 +14,51 @@ const { exists } = require('../models/user');
 
 // Begin user check in job
 async function user_warning(user, info) {
-    client.messages
-        .create({
-            body: `${info.warning} detected. Reply "X" if safe`,
-            from: process.env.PHONE_NUMBER, to: user.phoneNumber
-        })
-        .then(
-            Case.create({
-                // user ID
-                userID: user._id,
-                // type of warning (high, low, OOR, etc.)
-                warning: info.warning,
-                // user phone number
-                userPhone: user.phoneNumber,
-            },
-                // Create case in DB
-                (err, docs) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    console.log("🚀 ~ file: checker.js ~ line 35 ~ user_warning ~ docs._id", docs._id)
-                    setTimeout(() => {
-                        Case.deleteOne({ _id: docs._id })
-                            .then((case_info) => {
-                                if (case_info.deletedCount == 0) { return }
-                                else {
-                                    client.messages.create({
-                                        body: `${info.warning} detected ${user.textECAfter} minutes ago with no response since.`,
-                                        from: process.env.PHONE_NUMBER, to: user.phoneNumber
-                                    })
-                                        .then(() => { })
-                                }
-                            })
-                    }, user.textECAfter * 60 * 1000)
-                })
+    // Text user
+    client.messages.create({
+        body: `${info.warning} detected. Reply "X" if safe`,
+        from: process.env.PHONE_NUMBER, to: user.phoneNumber
+    })
+        // Create case in DB
+        .then(Case.create({
+            // user ID
+            userID: user._id,
+            // type of warning (high, low, OOR, etc.)
+            warning: info.warning,
+            // user phone number
+            userPhone: user.phoneNumber,
+        },
+            (err, docs) => {
+                if (err) { console.log(err) }
+                // Run this function after the user's max response time is up to see if they've responded
+                setTimeout(() => {
+                    // Check if user has responded (if they have, the case will be deleted in the DB)
+                    Case.deleteOne({ _id: docs._id })
+                        .then((case_info) => {
+                            if (case_info.deletedCount == 0) { return }
+                            else {
+                                client.messages.create({
+                                    body: `${info.warning} detected ${user.textECAfter} minutes ago with no response since.`,
+                                    from: process.env.PHONE_NUMBER, to: user.phoneNumber
+                                })
+                                    .then(() => { })
+                            }
+                        })
+                }, user.textECAfter * 60 * 1000)
+            })
         );
 }
 
-
 // connect to DB and check all values
-async function check_all() {
+async function check_all_bgs() {
     console.log(`It is ${new Date()}`);
-    console.log("Checking all values...")
+    console.log("Checking all bg values...")
     User.find({}, (err, docs) => {
         if (err) { console.log(err) }
         // Only run if user has a data source set up
         for (var i = 0; i < docs.length; i++) {
             user = docs[i];
-            if (!docs[i].userDataSource) { continue }
+            if (!user.userDataSource) { continue }
             url = "https://" + user.userDataSource + "/api/v2/entries.json"
             fetch(url, { method: "GET" })
                 .then(res => res.json())
@@ -82,6 +79,6 @@ async function check_all() {
 }
 
 
-const check_all_task = new AsyncTask('check all BGs', check_all, (err) => { console.log(err) })
+const check_all_task = new AsyncTask('check all BGs', check_all_bgs, (err) => { console.log(err) })
 
 scheduler.addSimpleIntervalJob(new SimpleIntervalJob({ minutes: 5, runImmediately: true }, check_all_task))
