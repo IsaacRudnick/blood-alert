@@ -74,11 +74,10 @@ async function check_all_bgs() {
                     }
                 });
         }
-    }
-    )
+    })
 }
 
 
-const check_all_task = new AsyncTask('check all BGs', check_all_bgs, (err) => { console.log(err) })
+const check_all_bgs_task = new AsyncTask('check all BGs', check_all_bgs, (err) => { console.log(err) })
 
-scheduler.addSimpleIntervalJob(new SimpleIntervalJob({ minutes: 5, runImmediately: true }, check_all_task))
+scheduler.addSimpleIntervalJob(new SimpleIntervalJob({ minutes: 5, runImmediately: true }, check_all_bgs_task))
