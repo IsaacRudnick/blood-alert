@@ -16,7 +16,7 @@ const reply_post = (req, res) => {
     Case.deleteMany({ userPhone: req.body.From }).then(() => {
       // Text back to user
       twilio_client.messages.create({
-        body: `Dismissal recieved!`,
+        body: `Dismissal received!`,
         from: process.env.PHONE_NUMBER,
         to: user.phoneNumber,
       });

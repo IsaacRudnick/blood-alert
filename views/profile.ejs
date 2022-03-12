@@ -22,7 +22,8 @@
         function signOut() {
           gapi.auth2
             .init({
-              client_id: "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com",
+              client_id:
+                "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com" /* cspell: disable-line */,
             })
             .then(() => {
               var auth2 = gapi.auth2.getAuthInstance();
@@ -37,7 +38,7 @@
 
       <h1>Settings</h1>
       <form action="/profile" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrftoken %>" />
+        <input type="hidden" name="_csrf" value="<%= csrf_token %>" />
 
         <label for="phoneNumber">Your phone number:</label><br />
         <input

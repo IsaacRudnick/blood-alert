@@ -30,7 +30,7 @@ const profile_get = (req, res) => {
     if (err) {
       console.log(err);
     }
-    res.render("profile", { title: "Profile", user: user, csrftoken: req.csrfToken() });
+    res.render("profile", { title: "Profile", user: user, csrf_token: req.csrfToken() });
   });
 };
 
@@ -109,7 +109,7 @@ const profile_post = (req, res) => {
           console.log(err);
         } else {
           console.log("Updated user: ", docs);
-          res.render("profile", { title: "Profile", user: user, csrftoken: req.csrfToken() });
+          res.render("profile", { title: "Profile", user: user, csrf_token: req.csrfToken() });
         }
       })
         .clone()
