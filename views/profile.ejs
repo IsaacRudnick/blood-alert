@@ -11,15 +11,14 @@
 <body>
     <main>
         <h1>Profile page</h1>
-
         <script>
             function init() {
-                gapi.load('auth2', function () {
+                gapi.load('auth2', () => {
                     /* Ready. Make a call to gapi.auth2.init or some other API */
                 });
-
             }
         </script>
+          
 
         <a href="#" onclick="signOut();">Sign out</a>
         <script>

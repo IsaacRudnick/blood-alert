@@ -3,13 +3,9 @@ For production:
 
 Check profile.ejs form input client-side before sending to server
 
-Create back end async texting API
-    SMS API (maybe at sms.url.com - https://www.npmjs.com/package/express-subdomain)
-
 Add token functionality to profile.ejs form / checker 
 
-Fix Twilio webhooks not working. Maybe can't use subdomain???
+Add CSRF protection
 
 <!-- CURRENT ISSUES WITH CHECKER -->
- need to setTimeout for textECs job and then be able to cancel
- need to hear back from client/user
+Need to recreate cases on launch

@@ -22,9 +22,8 @@ const logout_get = (req, res) => {
 const profile_get = (req, res) => {
   id = jwt.decode(req.cookies.JWT).id;
   User.findById({ _id: id }, (err, user) => {
-    console.log("🚀 ~ file: controller.js ~ line 26 ~ User.findById ~ user", user)
     if (err) { console.log(err) }
-    res.render('profile', { title: 'Profile', user: user });
+    res.render('profile', { title: 'Profile', user: user, csrftoken: req.csrfToken() });
   })
 };
 
@@ -82,7 +81,7 @@ const profile_post = (req, res) => {
         console.log("Updated user: ", docs);
         res.render("profile", { title: "Profile", email: req.email });
       }
-    }).clone().catch(function (err) { console.log(err) })
+    }).clone().catch((err) => { console.log(err) })
   }
   // Only call updateUser if all checks pass
   if (

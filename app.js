@@ -2,7 +2,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser')
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const csrf = require('csurf');
 require('dotenv').config();
 const routes = require('./routes/routes.js');
 const sms_routes = require('./routes/sms_routes.js');
@@ -29,13 +28,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // able to read cookies
 app.use(cookieParser());
-// include CSRF middleware. This stops CSRF attacks. 
-app.use(csrf({ cookie: true }))
 
 // NO CSRF TOKEN
 //For form validation, returns validator.js
 app.use('/validator.min.js', express.static(__dirname + '/node_modules/validator/validator.min.js'));
 app.use('/reply', sms_routes);
 
-// passes all requests to router.
+// passes all other requests to router.
 app.use('', routes);
+

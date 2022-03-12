@@ -2,13 +2,17 @@ const express = require('express');
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const controller = require('../controllers/controller');
+const csrf = require('csurf');
 
-const router = express.Router();
+const router = express.Router();  
 
-router.use('', (req, res, next) => {
-    res.locals.csrftoken = req.csrfToken(); 
+router.use(csrf({ cookie: true }))
+
+router.all('*', function (req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken())
     next();
-});
+  })  
+
 
 function authenticateToken(req, res, next) {
     const token = req.cookies['JWT'];
