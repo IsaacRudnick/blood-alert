@@ -1,6 +1,6 @@
 const twilio = require('twilio');
 require('dotenv').config();
-const client = new twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+const twilio_client = new twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 // User model for DB
 const User = require('../models/user');
 // Case model for DB
@@ -11,15 +11,20 @@ const scheduler = new ToadScheduler()
 // get JSON from internet
 const fetch = require('node-fetch');
 
-// Begin user check in job
+/* This function:
+-creates a case in MongoDB
+-texts the user to check on them
+-creates a deadman function, which checks to see if case
+still exists after user.textECAfter minutes expires and texts
+EC if not. 
+*/
 async function user_warning(user, info) {
     // Text user
-    client.messages.create({
-        body: `${info.warning} detected. Reply if safe`,
+    twilio_client.messages.create({
+        body: `${info.warning} detected. Reply within ${user.textECAfter} minutes if safe`,
         from: process.env.PHONE_NUMBER, to: user.phoneNumber
-    })
-        // Create case in DB
-        .then(Case.create({
+    // Create Case
+    }).then(Case.create({
             // user ID
             userID: user._id,
             // type of warning (high, low, OOR, etc.)
@@ -36,13 +41,13 @@ async function user_warning(user, info) {
                         .then((case_info) => {
                             if (case_info.deletedCount == 0) { return }
                             else {
-                                client.messages.create({
+                                twilio_client.messages.create({
                                     body: `${info.warning} detected ${user.textECAfter} minutes ago with no response since.`,
                                     from: process.env.PHONE_NUMBER, to: user.phoneNumber
-                                })
-                                    .then(() => { })
+                                }).then()
                             }
                         })
+                  // Timeout minutes -> ms
                 }, user.textECAfter * 60 * 1000)
             })
         );
@@ -52,24 +57,27 @@ async function user_warning(user, info) {
 async function check_all_bgs() {
     console.log(`It is ${new Date()}`);
     console.log("Checking all bg values...")
-    User.find({}, (err, docs) => {
+    User.find({"userDataSource": {"$ne": null}}, (err, docs) => {
         if (err) { console.log(err) }
         // Only run if user has a data source set up
         for (var i = 0; i < docs.length; i++) {
             user = docs[i];
-            if (!user.userDataSource) { continue }
             url = "https://" + user.userDataSource + "/api/v2/entries.json"
+          // Get user BG
             fetch(url, { method: "GET" })
                 .then(res => res.json())
                 .then(json => {
+                  console.log({user})
+                  // Output user BG
                     console.log(`${user.email}'s BG is ${json[0]['sgv']}`)
+                  // If high or low, create respective user warning
                     if (json[0]['sgv'] > user.highValue) {
                         console.log("Sending high SMS")
-                        user_warning(user, { bg_value: json[0]['sgv'], warning: "High blood sugar" })
+                        user_warning(user, { bg_value: json[0]['sgv'], warning: "Low blood sugar" })
                     }
                     else if (json[0]['sgv'] < user.lowValue) {
                         console.log("Sending low SMS")
-                        user_warning(user, { bg_value: json[0]['sgv'], warning: "Low blood sugar" })
+                        user_warning(user, { bg_value: json[0]['sgv'], warning: "High blood sugar" })
                     }
                 });
         }

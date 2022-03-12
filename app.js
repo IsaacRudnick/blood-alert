@@ -8,7 +8,7 @@ const sms_routes = require('./routes/sms_routes.js');
 const app = express();
 
 // run checker in background
-// require('./checker/checker')
+require('./checker/checker')
 
 // connect to mongodb & listen for requests
 const dbURI = process.env.DBURI;
@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 // able to read cookies
 app.use(cookieParser());
 
-// NO CSRF TOKEN
 //For form validation, returns validator.js
 app.use('/validator.min.js', express.static(__dirname + '/node_modules/validator/validator.min.js'));
 app.use('/reply', sms_routes);

@@ -14,6 +14,7 @@ const index_get = (req, res) => {
 
 const login_get = (req, res) => { res.render('login', { title: 'Login' }) };
 
+// Clears cookies and redirects to /login
 const logout_get = (req, res) => {
   res.clearCookie("JWT");
   res.redirect("/login");
@@ -21,6 +22,8 @@ const logout_get = (req, res) => {
 
 const profile_get = (req, res) => {
   id = jwt.decode(req.cookies.JWT).id;
+  // Checks user ID using JWT
+  // Find user and prefill profile.ejs form with info
   User.findById({ _id: id }, (err, user) => {
     if (err) { console.log(err) }
     res.render('profile', { title: 'Profile', user: user, csrftoken: req.csrfToken() });

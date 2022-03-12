@@ -5,7 +5,6 @@ Check profile.ejs form input client-side before sending to server
 
 Add token functionality to profile.ejs form / checker 
 
-Add CSRF protection
-
 <!-- CURRENT ISSUES WITH CHECKER -->
 Need to recreate cases on launch
+Add "snooze" functionality
