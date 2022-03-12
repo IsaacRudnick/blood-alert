@@ -24,5 +24,8 @@
     "twilio": "^3.75.1",
     "validator": "^13.7.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "prettier": {
+    "printWidth": 120
+  }
 }

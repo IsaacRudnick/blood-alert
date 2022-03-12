@@ -1,15 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //User will later add in other data or information
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     // user email
     email: { type: String },
     // user's phone number
     phoneNumber: { type: String },
     // high threshold for user
     highValue: { type: Number },
-    // low threshhold for user
+    // low threshold for user
     lowValue: { type: Number },
     // which number to text if user doesn't respond (family, friend, etc.) Emergency Contact Phone Number
     ECphoneNumber: { type: String },
@@ -18,9 +19,10 @@ const userSchema = new Schema({
     // How long to wait before checking on user again. Minutes
     userOkSnooze: { type: Number },
     //user data source (NS such as example-bg.herokuapp.com/)
-    userDataSource: { type: String }
-},
-    { timestamps: true });
+    userDataSource: { type: String },
+  },
+  { timestamps: true }
+);
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;
