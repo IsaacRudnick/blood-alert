@@ -10,13 +10,12 @@ const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler'
 const scheduler = new ToadScheduler()
 // get JSON from internet
 const fetch = require('node-fetch');
-const { exists } = require('../models/user');
 
 // Begin user check in job
 async function user_warning(user, info) {
     // Text user
     client.messages.create({
-        body: `${info.warning} detected. Reply "X" if safe`,
+        body: `${info.warning} detected. Reply if safe`,
         from: process.env.PHONE_NUMBER, to: user.phoneNumber
     })
         // Create case in DB

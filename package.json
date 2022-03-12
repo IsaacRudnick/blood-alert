@@ -22,8 +22,8 @@
     "mongoose": "^6.0.11",
     "node-fetch": "^2.6.7",
     "toad-scheduler": "^1.6.0",
-    "validator": "^13.7.0",
-    "yarn": "^1.22.17"
+    "twilio": "^3.75.1",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

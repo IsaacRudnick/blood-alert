@@ -5,6 +5,11 @@ const controller = require('../controllers/controller');
 
 const router = express.Router();
 
+router.use('', (req, res, next) => {
+    res.locals.csrftoken = req.csrfToken(); 
+    next();
+});
+
 function authenticateToken(req, res, next) {
     const token = req.cookies['JWT'];
     if (token == null) return res.redirect('/login');

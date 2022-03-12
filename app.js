@@ -7,11 +7,9 @@ require('dotenv').config();
 const routes = require('./routes/routes.js');
 const sms_routes = require('./routes/sms_routes.js');
 const app = express();
-const csrfMiddleWare = csrf({ cookie: true });
-var subdomain = require('express-subdomain');
 
 // run checker in background
-const checker = require('./checker/checker')
+// require('./checker/checker')
 
 // connect to mongodb & listen for requests
 const dbURI = process.env.DBURI;
@@ -32,21 +30,12 @@ app.use(express.urlencoded({ extended: true }));
 // able to read cookies
 app.use(cookieParser());
 // include CSRF middleware. This stops CSRF attacks. 
-app.use(csrfMiddleWare);
+app.use(csrf({ cookie: true }))
 
-// Takes any requests and creates a cookie with csrf cookie
-app.all('*', (req, res, next) => {
-    res.cookie('XSRF-TOKEN', req.csrfToken());
-    // Sets a local value for use when rendering profile.ejs form.
-    res.locals.csrftoken = req.csrfToken();
-    // passes to next middleware
-    next();
-});
-
-
+// NO CSRF TOKEN
 //For form validation, returns validator.js
 app.use('/validator.min.js', express.static(__dirname + '/node_modules/validator/validator.min.js'));
+app.use('/reply', sms_routes);
 
-app.use(subdomain('sms', sms_routes));
 // passes all requests to router.
 app.use('', routes);
