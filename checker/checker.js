@@ -92,7 +92,7 @@ async function check_all_bgs() {
             console.log("Sending high SMS");
             user_warning(user, {
               bg_value: json[0]["sgv"],
-              warning: "Low blood sugar",
+              warning: "High blood sugar",
             });
           }
           // case for low BG
@@ -100,7 +100,7 @@ async function check_all_bgs() {
             console.log("Sending low SMS");
             user_warning(user, {
               bg_value: json[0]["sgv"],
-              warning: "High blood sugar",
+              warning: "Low blood sugar",
             });
           }
         });
