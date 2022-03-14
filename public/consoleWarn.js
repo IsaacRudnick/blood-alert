@@ -14,5 +14,5 @@ console.log(
 // It was made in about 5 minutes so I'm open to any feedback.
 // Feel free to email me at bloodsugaralertdev@gmail.com
 
-// ∀ Z c ∃ n s.t. n=c-1
-// 61 61 81 73 53 74 88 90 50 57 50 89 122 108 71 90 103 52 87 97 103 52 87 100 109 66 121 99 110 85 109 99 108 104 71 86
+// ∀ x ∈ A ∃ c s.t. c=x-1
+// A: {62, 62, 82, 74, 54, 75, 89, 91, 51, 58, 51, 90, 123, 109, 72, 91, 104, 53, 88, 98, 104, 53, 88, 101, 110, 67, 122, 100, 111, 86, 110, 100, 109, 105, 72, 87}
