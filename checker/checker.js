@@ -105,18 +105,18 @@ async function check_all_bgs() {
   console.log("Checking all bg values...");
 
   // Get only users with a data source set up
-  User.find({ dataSource: { $ne: null } }, (err, docs) => {
+  User.find({ dataSource: { $ne: null } }, (err, docs_users) => {
     if (err) {
       console.log(err);
     }
     // For each user
-    for (var i = 0; i < docs.length; i++) {
-      user = docs[i];
-      Case.find({ userID: user._id }, (err, docs) => {
+    for (var i = 0; i < docs_users.length; i++) {
+      user = docs_users[i];
+      Case.find({ userID: user._id }, (err, docs_cases) => {
         // If there are cases for the user, skip their check
-        if (docs.length > 0) return;
-        // Otherwise, do standard checks
+        if (docs_cases.length > 0) return;
 
+        // Otherwise, do standard checks
         url = "https://" + user.dataSource + "/api/v2/entries.json";
         // Get user BG
         fetch(url, { method: "GET" })
