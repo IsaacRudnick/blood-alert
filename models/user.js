@@ -9,17 +9,17 @@ const userSchema = new Schema(
     // user's phone number
     phoneNumber: { type: String },
     // high threshold for user
-    highValue: { type: Number },
+    highThreshold: { type: Number },
     // low threshold for user
-    lowValue: { type: Number },
+    lowThreshold: { type: Number },
     // which number to text if user doesn't respond (family, friend, etc.) Emergency Contact Phone Number
     ECphoneNumber: { type: String },
     // how long out-of-range readings must continue before EC is texted with alert
     textECAfter: { type: Number },
     // How long to wait before checking on user again. Minutes
-    userOkSnooze: { type: Number },
+    snoozeMinutes: { type: Number },
     //user data source (NS such as example-bg.herokuapp.com/)
-    userDataSource: { type: String },
+    dataSource: { type: String },
   },
   { timestamps: true }
 );

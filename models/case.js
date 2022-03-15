@@ -10,6 +10,8 @@ const caseSchema = new Schema(
     warning: { type: String },
     // user's phone number
     userPhone: { type: String },
+    // snooze time (minutes)
+    userOkSnooze: { type: Number },
   },
   { timestamps: true }
 );

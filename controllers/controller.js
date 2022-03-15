@@ -70,33 +70,33 @@ const profile_post = (req, res) => {
   // For simplicity and cleaner debugging.
   delete req.body["_csrf"];
   phoneNumber = req.body.phoneNumber;
-  highValue = req.body.highValue;
-  lowValue = req.body.lowValue;
+  highThreshold = req.body.highThreshold;
+  lowThreshold = req.body.lowThreshold;
   ECphoneNumber = req.body.ECphoneNumber;
   textECAfter = req.body.textECAfter;
   userOkSnooze = req.body.userOkSnooze;
-  userDataSource = req.body.userDataSource;
+  dataSource = req.body.dataSource;
 
   // Only call updateUser if all checks pass
   if (
     validator.isMobilePhone(phoneNumber, "any", { strictMode: true }) &&
-    validator.isInt(highValue, { min: 1, max: 400 }) &&
-    validator.isInt(lowValue, { min: 1, max: 400 }) &&
+    validator.isInt(highThreshold, { min: 1, max: 400 }) &&
+    validator.isInt(lowThreshold, { min: 1, max: 400 }) &&
     validator.isMobilePhone(ECphoneNumber, "any", { strictMode: true }) &&
     validator.isInt(textECAfter) &&
     validator.isInt(userOkSnooze) &&
-    validator.isURL(userDataSource) &&
-    validator.contains(userDataSource, ".herokuapp.com")
+    validator.isURL(dataSource) &&
+    validator.contains(dataSource, ".herokuapp.com")
   ) {
     //Creates new object so client can't pass extra fields (add spam to req.body fields which would then go to DB)
     var valid_input = {};
     valid_input.phoneNumber = phoneNumber;
-    valid_input.highValue = highValue;
-    valid_input.lowValue = lowValue;
+    valid_input.highThreshold = highThreshold;
+    valid_input.lowThreshold = lowThreshold;
     valid_input.ECphoneNumber = ECphoneNumber;
     valid_input.textECAfter = textECAfter;
     valid_input.userOkSnooze = userOkSnooze;
-    valid_input.userDataSource = userDataSource;
+    valid_input.dataSource = dataSource;
 
     email = req.email;
 
