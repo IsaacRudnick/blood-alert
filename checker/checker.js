@@ -11,6 +11,38 @@ const scheduler = new ToadScheduler();
 // get JSON from internet
 const fetch = require("node-fetch");
 
+// Recreate all user cases
+function recreate_cases() {
+  // Get all cases from DB
+  Case.find({}, (err, docs) => {
+    if (err) {
+      console.log(err);
+    }
+    // For each case
+    for (var i = 0; i < docs.length; i++) {
+      // "case" is reserved in JS so "case_" is used instead
+      case_ = docs[i];
+      // Get the user associated with the case
+      User.findById({ _id: case_.userID }, (err, user) => {
+        if (err) {
+          console.log(err);
+        }
+        // Text user about outage
+        twilio_client.messages
+          .create({
+            body: `Our service was interrupted during an active case for ${user.email}. Respond within ${user.textECAfter} minutes or your emergency contact will be notified.`,
+            from: process.env.PHONE_NUMBER,
+            to: user.phoneNumber,
+          })
+          // Delete old case from DB
+          .then(Case.deleteOne({ _id: case_._id }))
+          // Create new case (both DB document AND timeout function)
+          .then(create_new_case(user, { warning: case_.warning }));
+      });
+    }
+  });
+}
+
 /* This function:
 -creates a case in MongoDB
 -texts the user to check on them
@@ -18,7 +50,7 @@ const fetch = require("node-fetch");
 still exists after user.textECAfter minutes expires and texts
 EC if not. 
 */
-async function user_warning(user, info) {
+async function create_new_case(user, info) {
   // Text user
   twilio_client.messages
     .create({
@@ -90,23 +122,21 @@ async function check_all_bgs() {
           // case for high BG
           if (json[0]["sgv"] > user.highValue) {
             console.log("Sending high SMS");
-            user_warning(user, {
-              bg_value: json[0]["sgv"],
-              warning: "High blood sugar",
-            });
+            create_new_case(user, { warning: "high blood sugar" });
           }
           // case for low BG
           else if (json[0]["sgv"] < user.lowValue) {
             console.log("Sending low SMS");
-            user_warning(user, {
-              bg_value: json[0]["sgv"],
-              warning: "Low blood sugar",
-            });
+            create_new_case(user, { warning: "low blood sugar" });
           }
         });
     }
   });
 }
+
+// Before the standard checker loop starts, recreate all cases
+recreate_cases();
+
 // Create task to check all BGs and schedule it for every 5 minutes (and immediately)
 const check_all_bgs_task = new AsyncTask("check all BGs", check_all_bgs, (err) => {
   console.log(err);
