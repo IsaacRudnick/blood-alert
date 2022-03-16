@@ -12,11 +12,11 @@ const reply_post = (req, res) => {
       req.body
     )
   ) {
-    // Delete cases with sender phone #
-    Case.deleteMany({ userPhone: req.body.From }).then(() => {
+    // Update case to include snooze time
+    Case.updateMany({ userPhone: req.body.From }, { $set: { expire_at: user.snoozeMinutes * 60 } }).then(() => {
       // Text back to user
       twilio_client.messages.create({
-        body: `Dismissal received!`,
+        body: `Dismissal received! Snoozing for ${user.snoozeMinutes} minutes.`,
         from: process.env.PHONE_NUMBER,
         to: user.phoneNumber,
       });

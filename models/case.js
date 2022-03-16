@@ -11,7 +11,11 @@ const caseSchema = new Schema(
     // user's phone number
     userPhone: { type: String },
     // snooze time (minutes)
-    userOkSnooze: { type: Number },
+    expireAt: {
+      type: Date,
+      default: Date.now,
+      index: { expires: "5m" },
+    },
   },
   { timestamps: true }
 );
