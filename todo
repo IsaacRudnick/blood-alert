@@ -4,7 +4,3 @@ For production:
 Check profile.ejs form input client-side before sending to server
 
 Add token functionality to profile.ejs form / checker 
-
-<!-- CURRENT ISSUES WITH CHECKER -->
-Add "snooze" functionality
->Code seems to be adding more cases with every check. Not sure why. Look into. 
