@@ -1,6 +1,7 @@
 const Case = require("../models/case");
 const twilio = require("twilio");
 const twilio_client = new twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+const moment = require("moment");
 
 const reply_post = (req, res) => {
   // Validate the POST is from twilio
@@ -13,7 +14,10 @@ const reply_post = (req, res) => {
     )
   ) {
     // Update case to include snooze time
-    Case.updateMany({ userPhone: req.body.From }, { $set: { expire_at: user.snoozeMinutes * 60 } }).then(() => {
+    Case.updateOne(
+      { userPhone: req.body.From },
+      { $set: { snoozedUntil: moment().add(user.snoozeMinutes, "m") } }
+    ).then(() => {
       // Text back to user
       twilio_client.messages.create({
         body: `Dismissal received! Snoozing for ${user.snoozeMinutes} minutes.`,

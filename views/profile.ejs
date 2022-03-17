@@ -65,8 +65,8 @@
         <label for=" textECAfter">how long to wait for a response before texting your emergency contact</label><br />
         <input type="text" id="textECAfter" name="textECAfter" value="<%= user?.textECAfter ?? '30?'%>" /><br />
 
-        <label for=" userOkSnooze">how long to wait to wait before checking on you again</label><br />
-        <input type="text" id="userOkSnooze" name="userOkSnooze" value="<%= user?.userOkSnooze ?? '60?'%>" /><br />
+        <label for=" snoozeMinutes">how long to wait to wait before checking on you again</label><br />
+        <input type="text" id="snoozeMinutes" name="snoozeMinutes" value="<%= user?.snoozeMinutes ?? '60?'%>" /><br />
 
         <label for=" dataSource">your NS link</label><br />
         <input

@@ -10,13 +10,10 @@ const caseSchema = new Schema(
     warning: { type: String },
     // user's phone number
     userPhone: { type: String },
-    // snooze time (minutes)
-    expireAt: {
-      type: Date,
-      default: Date.now,
-      index: { expires: "5m" },
-    },
+    // used in checker.js
+    snoozedUntil: { type: Date, default: null },
   },
+
   { timestamps: true }
 );
 

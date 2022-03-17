@@ -74,7 +74,7 @@ const profile_post = (req, res) => {
   lowThreshold = req.body.lowThreshold;
   ECphoneNumber = req.body.ECphoneNumber;
   textECAfter = req.body.textECAfter;
-  userOkSnooze = req.body.userOkSnooze;
+  snoozeMinutes = req.body.snoozeMinutes;
   dataSource = req.body.dataSource;
 
   // Only call updateUser if all checks pass
@@ -84,7 +84,7 @@ const profile_post = (req, res) => {
     validator.isInt(lowThreshold, { min: 1, max: 400 }) &&
     validator.isMobilePhone(ECphoneNumber, "any", { strictMode: true }) &&
     validator.isInt(textECAfter) &&
-    validator.isInt(userOkSnooze) &&
+    validator.isInt(snoozeMinutes) &&
     validator.isURL(dataSource) &&
     validator.contains(dataSource, ".herokuapp.com")
   ) {
@@ -95,7 +95,7 @@ const profile_post = (req, res) => {
     valid_input.lowThreshold = lowThreshold;
     valid_input.ECphoneNumber = ECphoneNumber;
     valid_input.textECAfter = textECAfter;
-    valid_input.userOkSnooze = userOkSnooze;
+    valid_input.snoozeMinutes = snoozeMinutes;
     valid_input.dataSource = dataSource;
 
     email = req.email;
@@ -109,7 +109,7 @@ const profile_post = (req, res) => {
           console.log(err);
         } else {
           console.log("Updated user: ", docs);
-          res.render("profile", { title: "Profile", user: user, csrf_token: req.csrfToken() });
+          res.render("profile", { title: "Profile", user: docs, csrf_token: req.csrfToken() });
         }
       })
         .clone()

@@ -14,8 +14,8 @@ const { text } = require("express");
 
 // Recreate all user cases
 function recreate_cases() {
-  // Get all cases from DB
-  Case.find({}, (err, docs) => {
+  // Get all active (not snoozed) cases from DB
+  Case.find({ snoozedUntil: null }, (err, docs) => {
     if (err) {
       console.log(err);
     }
@@ -111,10 +111,21 @@ async function check_all_bgs() {
     }
     // For each user
     for (var i = 0; i < docs_users.length; i++) {
+      // For cleaner code
       user = docs_users[i];
-      Case.find({ userID: user._id }, (err, docs_cases) => {
-        // If there are cases for the user, skip their check
-        if (docs_cases.length > 0) return;
+      
+      // Delete case if snooze time has passed
+      Case.deleteOne({ userID: user._id, snoozedUntil: { $lte: Date.now() } }).exec();
+
+      // If an existing case exists, skip this user
+      Case.findOne({ userID: user._id }, (err, case_) => {
+        if (err) {
+          console.log(err);
+        }
+
+        if (case_ != null) {
+          return;
+        }
 
         // Otherwise, do standard checks
         url = "https://" + user.dataSource + "/api/v2/entries.json";
