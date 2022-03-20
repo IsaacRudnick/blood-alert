@@ -25,8 +25,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
-    "wipeclean": "^1.1.2"
+    "morgan": "^1.10.0"
   },
   "prettier": {
     "printWidth": 120
