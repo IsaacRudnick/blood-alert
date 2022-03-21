@@ -59,7 +59,7 @@ const login_post = (req, res) => {
       jwt_token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "3d",
       });
-      // {secure: true} for production.
+      // FIXME: {secure: true} for production.
       res.cookie("JWT", jwt_token, { httpOnly: true });
       res.redirect("/profile");
     })
