@@ -10,7 +10,6 @@ const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require("toad-scheduler"
 const scheduler = new ToadScheduler();
 // get JSON from internet
 const fetch = require("node-fetch");
-const { text } = require("express");
 
 // Recreate all user cases
 function recreate_cases() {
@@ -113,7 +112,7 @@ async function check_all_bgs() {
     for (var i = 0; i < docs_users.length; i++) {
       // For cleaner code
       user = docs_users[i];
-      
+
       // Delete case if snooze time has passed
       Case.deleteOne({ userID: user._id, snoozedUntil: { $lte: Date.now() } }).exec();
 
