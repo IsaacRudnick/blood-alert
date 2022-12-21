@@ -1,5 +1,6 @@
 # MANUAL ADDITIONS
 .replit
+**/dist
 
 # Logs
 logs

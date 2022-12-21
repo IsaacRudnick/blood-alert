@@ -1,8 +1,19 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+interface IUser {
+  email: string;
+  phoneNumber: string;
+  highThreshold: number;
+  lowThreshold: number;
+  ECphoneNumber: string;
+  textECAfter: number;
+  snoozeMinutes: number;
+  dataSource: string;
+}
+
 //User will later add in other data or information
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     // user email
     email: { type: String },
@@ -25,4 +36,5 @@ const userSchema = new Schema(
 );
 
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+export default User;
+export { IUser };

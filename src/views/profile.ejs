@@ -3,7 +3,6 @@
   <head>
     <% include("./partials/header.ejs") %>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-    <script type="text/javascript" src="validator.min.js"></script>
   </head>
 
   <body onload="init()">
@@ -38,8 +37,6 @@
 
       <h1>Settings</h1>
       <form action="/profile" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrf_token %>" />
-
         <label for="phoneNumber">Your phone number:</label><br />
         <input
           type="text"
