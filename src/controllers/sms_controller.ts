@@ -1,13 +1,15 @@
 import Case from "../models/case.js";
 import User from "../models/user.js";
-import twilio, { Twilio } from "twilio";
-const twilio_client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+import twilio, * as Twilio from "twilio";
+import dotenv from "dotenv";
+dotenv.config();
+const twilio_client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
 import { UserObj } from "../types.js";
 
 const reply_post = async (req, res) => {
   // Validate the POST is from twilio
-  const isFromTwilio: boolean = twilio.validateRequest(
+  const isFromTwilio: boolean = Twilio.validateRequest(
     process.env.TWILIO_AUTH_TOKEN,
     req.headers["x-twilio-signature"],
     "https://www.blood-alert.com/reply",
