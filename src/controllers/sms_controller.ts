@@ -1,7 +1,9 @@
 import Case from "../models/case.js";
 import User from "../models/user.js";
-import twilio, { Twilio } from "twilio";
-const twilio_client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+import twilio, * as Twilio from "twilio";
+import dotenv from "dotenv";
+dotenv.config();
+const twilio_client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
 import { UserObj } from "../types.js";
 

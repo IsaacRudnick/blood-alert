@@ -1,5 +1,5 @@
-import { Twilio } from "twilio";
-const twilio_client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+import twilio from "twilio";
+const twilio_client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 import User from "../models/user.js";
 import Case from "../models/case.js";
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
