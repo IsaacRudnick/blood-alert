@@ -5,11 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "build-start": "yarn build && yarn start",
-    "build": "yarn clean && tsc && yarn copy-files",
-    "start": "node dist/app.js",
-    "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 src/**/*.ejs src/**/*.css srcs/**/*.js dist/"
+    "build": "tsc",
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -31,10 +28,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
-    "copyfiles": "^2.4.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
-    "rimraf": "^3.0.2",
     "typescript": "^4.9.4"
   },
   "prettier": {

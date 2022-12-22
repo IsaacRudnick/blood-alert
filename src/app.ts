@@ -19,6 +19,7 @@ await mongoose.connect(dbURI);
 await app.listen(process.env.PORT || 8080); // listen for requests
 
 /* =============================== Middleware =============================== */
+
 // register view engine
 app.set("view engine", "ejs");
 // show incoming requests in console (dev mode only)
