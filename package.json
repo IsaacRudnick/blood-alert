@@ -7,9 +7,9 @@
   "scripts": {
     "quick-start": "yarn nodemon --exec yarn ts-node-esm src/app.ts",
     "start": "node dist/app.js",
-    "build": "yarn clean && tsc && yarn copy-files",
-    "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/"
+    "build": "rimraf dist/ && tsc && yarn copy-files",
+    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/",
+    "clean": "rimraf dist/ && rimraf logs/"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "twilio": "^3.75.1",
     "validator": "^13.7.0",
     "winston": "^3.8.2",
+    "winston-daily-rotate-file": "^4.7.1",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

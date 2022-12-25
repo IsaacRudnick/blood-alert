@@ -6,6 +6,7 @@ const CLIENT_ID = env.OAUTH_CLIENT_ID;
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import { UserObj } from "../types.js";
+import logger from "../util/logger.js";
 //ROUTING
 
 /* ============================== GET REQUESTS ============================== */
@@ -91,7 +92,7 @@ const profile_post = async (req, res) => {
     // .lean() returns a plain javascript object instead of a mongoose document
     let user: UserObj = await User.findByIdAndUpdate(req.id, validated_input, options).lean();
 
-    console.log("Updated user: ", user);
+    logger.debug("Updated user: ", user);
     res.render("profile", { title: "Profile", user: user });
   }
   // If error, send error message to client

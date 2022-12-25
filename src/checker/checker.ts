@@ -1,5 +1,6 @@
-import twilio from "twilio";
 import * as env from "../util/secrets.js";
+import logger from "../util/logger.js";
+import twilio from "twilio";
 const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import User from "../models/user.js";
 import Case from "../models/case.js";
@@ -7,6 +8,7 @@ import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 const scheduler = new ToadScheduler();
 import fetch from "node-fetch";
 import { UserObj, CaseObj } from "../types.js";
+
 /**
  * This function:
  * - gets all active cases from DB
@@ -100,8 +102,7 @@ async function create_new_case(user, info, text_user: boolean = true) {
  * - if a case already exists, skips user
  */
 async function check_all_bgs() {
-  console.log(`It is ${new Date()}`);
-  console.log("Checking all bg values...");
+  logger.info("Checking all bg values...");
 
   // Get only users with a data source set up
   let users = await User.find({ dataSource: { $ne: null } });
@@ -121,18 +122,17 @@ async function check_all_bgs() {
     // Get user BG
     let json = await (await fetch(url, { method: "GET" })).json();
     // Output user BG
-    console.log(`${user.email}'s BG is ${json[0]["sgv"]}`);
+    logger.debug(`${user.email}'s BG is ${json[0]["sgv"]}`);
 
     // If high or low, create respective user warning
-
     // case for high BG
     if (json[0]["sgv"] > user.highThreshold) {
-      console.log("Sending high SMS");
+      logger.debug("Sending high SMS");
       create_new_case(user, { warning: "high blood sugar" });
     }
     // case for low BG
     else if (json[0]["sgv"] < user.lowThreshold) {
-      console.log("Sending low SMS");
+      logger.debug("Sending low SMS");
       create_new_case(user, { warning: "low blood sugar" });
     }
   }

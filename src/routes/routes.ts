@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import * as controller from "../controllers/controller.js";
+import logger from "../util/logger.js";
 import * as env from "../util/secrets.js";
 
 const router = express.Router();
@@ -20,7 +21,7 @@ async function authenticateToken(req, res, next) {
     req.id = decodedID;
     next();
   } catch (err) {
-    console.log("User not logged in, redirecting");
+    logger.debug("User not logged in, redirecting");
     res.redirect("/login");
   }
 }

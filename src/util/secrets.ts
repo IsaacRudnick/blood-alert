@@ -1,23 +1,24 @@
-console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 // This data accesses the .env file and exports the data as a module
 // It also checks to make sure the variables exist.
-// However, it DOES NOT check to make sure the variables are valid.
+// However, it DOES NOT check to make sure the variables are valid,
+// with the exception of the NODE_ENV variable.
 import dotenv from "dotenv";
 import fs from "fs";
 import logger from "./logger.js";
 
 if (fs.existsSync(".env")) {
-  logger.debug("Using .env file to supply config environment variables");
-  dotenv.config({ path: ".env" });
+  logger.info("Using .env file to supply config environment variables");
+  dotenv.config();
 } else {
-  logger.debug("Using .env.example file to supply config environment variables");
-  dotenv.config({ path: ".env.example" }); // you can delete this after you create your own .env file!
+  logger.error(".env file not found. Please create one, following example in .env.example");
+  logger.end();
 }
 
 export const NODE_ENV = process.env.NODE_ENV;
-if (!NODE_ENV) {
+// NODE_ENV is the only variable that is checked for validity.
+if (!NODE_ENV || (NODE_ENV != "dev" && NODE_ENV != "prod")) {
   logger.error("No NODE_ENV environment variable set.");
-  process.exit(1);
+  logger.end();
 }
 const prod = NODE_ENV === "prod"; // Anything else is treated as 'dev'
 
@@ -25,12 +26,12 @@ export const PORT: string = process.env.PORT || "8080";
 export const DBURI: string = process.env.DBURI;
 if (!DBURI) {
   logger.error("No mongo connection string. Set DBURI environment variable.");
-  process.exit(1);
+  logger.end();
 }
 export const ACCESS_TOKEN_SECRET: string = process.env.ACCESS_TOKEN_SECRET;
 if (!ACCESS_TOKEN_SECRET) {
   logger.error("No client secret. Set ACCESS_TOKEN_SECRET environment variable.");
-  process.exit(1);
+  logger.end();
 }
 
 export const TWILIO_AUTH_TOKEN: string = process.env.TWILIO_AUTH_TOKEN;
@@ -40,13 +41,13 @@ if (!TWILIO_AUTH_TOKEN || !TWILIO_ACCOUNT_SID || !TWILIO_PHONE_NUMBER) {
   logger.error(
     "Missing one or more twilio credentials. Set TWILIO_AUTH_TOKEN, TWILIO_ACCOUNT_SID, and TWILIO_PHONE_NUMBER environment variables."
   );
-  process.exit(1);
+  logger.end();
 }
 
 export const OAUTH_CLIENT_ID: string = process.env.OAUTH_CLIENT_ID;
 if (!OAUTH_CLIENT_ID) {
   logger.error("No OAuth client ID. Set OAUTH_CLIENT_ID environment variable.");
-  process.exit(1);
+  logger.end();
 }
 
 export const FIREBASE_API_KEY: string = process.env.FIREBASE_API_KEY;
@@ -75,5 +76,5 @@ if (
     FIREBASE_APPID, and \
     FIREBASE_MEASUREMENTID environment variables."
   );
-  process.exit(1);
+  logger.end();
 }

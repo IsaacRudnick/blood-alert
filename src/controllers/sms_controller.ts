@@ -5,6 +5,7 @@ import * as env from "../util/secrets.js";
 const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
 import { UserObj } from "../types.js";
+import logger from "../util/logger.js";
 
 const reply_post = async (req, res) => {
   // Validate the POST is from twilio
@@ -16,7 +17,7 @@ const reply_post = async (req, res) => {
   );
   if (!isFromTwilio) {
     res.send("Nice try!");
-    console.log("SMS API request NOT from twilio!");
+    logger.info("SMS API request NOT from twilio!");
   }
 
   // Get user associated with phone number that sent the reply
