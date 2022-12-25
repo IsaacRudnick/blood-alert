@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import  morgan from "morgan";
+import morgan from "morgan";
 import * as env from "./util/secrets.js";
 import logger from "./util/logger.js";
 import mongoose from "mongoose";
@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 // show incoming requests in console (dev mode only)
 if (env.NODE_ENV == "dev") app.use(morgan("dev"));
 // sets public folder (css, images, browser/client js, etc.)
-app.use(express.static("public"));
+app.use(express.static("./views/public"));
 // used to parse JSON bodies and replaces deprecated body-parser
 app.use(express.json());
 // allows url encoding

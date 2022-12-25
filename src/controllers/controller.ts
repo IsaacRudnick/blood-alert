@@ -11,11 +11,11 @@ import logger from "../util/logger.js";
 
 /* ============================== GET REQUESTS ============================== */
 const index_get = async (req, res) => {
-  res.render("index", { title: "Home" });
+  res.render("index", { title: "Home", firebase: env.FIREBASE });
 };
 
 const login_get = async (req, res) => {
-  res.render("login", { title: "Login" });
+  res.render("login", { title: "Login", firebase: env.FIREBASE });
 };
 
 // Clears cookies and redirects to /login
@@ -29,7 +29,7 @@ const profile_get = async (req, res) => {
   // Checks user ID using JWT
   // Find user and pre fill profile.ejs form with info
   let user: UserObj = await User.findById({ _id: id });
-  res.render("profile", { title: "Profile", user: user });
+  res.render("profile", { title: "Profile", user: user, firebase: env.FIREBASE });
 };
 
 /* ============================== POST REQUESTS ============================= */
@@ -93,7 +93,7 @@ const profile_post = async (req, res) => {
     let user: UserObj = await User.findByIdAndUpdate(req.id, validated_input, options).lean();
 
     logger.debug("Updated user: ", user);
-    res.render("profile", { title: "Profile", user: user });
+    res.render("profile", { title: "Profile", user: user, firebase: env.FIREBASE });
   }
   // If error, send error message to client
   else {
