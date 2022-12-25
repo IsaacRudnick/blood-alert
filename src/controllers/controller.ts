@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import validator from "validator";
 import { OAuth2Client } from "google-auth-library";
-const CLIENT_ID = process.env.OAUTH_CLIENT_ID;
+import * as env from "../util/secrets.js";
+const CLIENT_ID = env.OAUTH_CLIENT_ID;
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import { UserObj } from "../types.js";
@@ -44,8 +45,8 @@ const login_post = async (req, res) => {
 
   // Find existing user or create new user if not found
   let user: UserObj = await User.findOneAndUpdate(query, update, options);
-  let jwt_token: string = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" });
-  if (process.env.mode == "dev") {
+  let jwt_token: string = jwt.sign({ id: user.id }, env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" });
+  if (env.NODE_ENV == "dev") {
     res.cookie("JWT", jwt_token, { httpOnly: true });
   } else {
     // If in production, set secure to true

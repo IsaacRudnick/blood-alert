@@ -1,11 +1,22 @@
-<footer>
-    Copyright &copy; Blood Sugar Alert 2021
-</footer>
+<footer>Copyright &copy; Blood Sugar Alert 2021</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+<script type="module">
+  // Firebase setup
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
 
-</body>
+  const firebaseConfig = {
+    apiKey: "<%=env.FIREBASE_API_KEY  %>",
+    authDomain: "<%=env.FIREBASE_AUTH_DOMAIN  %>",
+    projectId: "<%=env.FIREBASE_PROJECTID %>",
+    storageBucket: "<%=env.FIREBASE_STORAGEBUCKET %>",
+    messagingSenderId: "<%=env.FIREBASE_MESSAGING_SENDERID %>",
+    appId: "<%=env.FIREBASE_APPID %>",
+    measurementId: "<%=env.FIREBASE_MEASUREMENTID %>",
+  };
 
-</html>
+  // Initialize Firebase
+  const firebaseApp = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(firebaseApp);
+</script>

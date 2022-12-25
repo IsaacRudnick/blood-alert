@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import * as controller from "../controllers/controller.js";
+import * as env from "../util/secrets.js";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ async function authenticateToken(req, res, next) {
 
   // Verifies token. redirect to /login if error.
   try {
-    let decodedID: string = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET).id;
+    let decodedID: string = await jwt.verify(token, env.ACCESS_TOKEN_SECRET).id;
     // If no error, assign id to req.id
     req.id = decodedID;
     next();

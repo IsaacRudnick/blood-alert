@@ -1,16 +1,15 @@
 import Case from "../models/case.js";
 import User from "../models/user.js";
-import twilio, * as Twilio from "twilio";
-import dotenv from "dotenv";
-dotenv.config();
-const twilio_client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+import twilio from "twilio";
+import * as env from "../util/secrets.js";
+const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
 import { UserObj } from "../types.js";
 
 const reply_post = async (req, res) => {
   // Validate the POST is from twilio
   const isFromTwilio: boolean = twilio.validateRequest(
-    process.env.TWILIO_AUTH_TOKEN,
+    env.TWILIO_AUTH_TOKEN,
     req.headers["x-twilio-signature"],
     "https://www.blood-alert.com/reply",
     req.body
@@ -33,7 +32,7 @@ const reply_post = async (req, res) => {
   // Text back to user
   twilio_client.messages.create({
     body: `Dismissal received! Snoozing for ${user.snoozeMinutes} minutes.`,
-    from: process.env.PHONE_NUMBER,
+    from: env.TWILIO_PHONE_NUMBER,
     to: user.phoneNumber,
   });
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% include("./partials/header.ejs") %>
+    <%- include("./partials/header.ejs") %>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
   </head>
 
@@ -21,8 +21,7 @@
         function signOut() {
           gapi.auth2
             .init({
-              client_id:
-                "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com" /* cspell: disable-line */,
+              client_id: "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com",
             })
             .then(() => {
               var auth2 = gapi.auth2.getAuthInstance();
@@ -77,6 +76,6 @@
       </form>
     </main>
 
-    <% include("./partials/footer.ejs") %>
+    <%- include("./partials/footer.ejs") %>
   </body>
 </html>

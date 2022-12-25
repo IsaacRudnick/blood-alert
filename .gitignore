@@ -1,6 +1,7 @@
 # MANUAL ADDITIONS
 .replit
 **/dist
+/.vscode
 
 # Logs
 logs

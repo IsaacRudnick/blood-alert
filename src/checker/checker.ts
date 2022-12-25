@@ -1,5 +1,6 @@
 import twilio from "twilio";
-const twilio_client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+import * as env from "../util/secrets.js";
+const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import User from "../models/user.js";
 import Case from "../models/case.js";
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
@@ -26,7 +27,7 @@ async function recreate_cases() {
     // Text user about outage
     await twilio_client.messages.create({
       body: `Our service was interrupted during an active case for ${user.email}. Respond within ${user.textECAfter} minutes or your emergency contact will be notified.`,
-      from: process.env.PHONE_NUMBER,
+      from: env.TWILIO_PHONE_NUMBER,
       to: user.phoneNumber,
     });
     // Delete old case from DB
@@ -53,7 +54,7 @@ async function create_new_case(user, info, text_user: boolean = true) {
   if (text_user) {
     await twilio_client.messages.create({
       body: `${info.warning} detected. Reply within ${user.textECAfter} minutes if safe`,
-      from: process.env.PHONE_NUMBER,
+      from: env.TWILIO_PHONE_NUMBER,
       to: user.phoneNumber,
       // Create Case
     });
@@ -77,7 +78,7 @@ async function create_new_case(user, info, text_user: boolean = true) {
     // If user hasn't responded, text EC
     await twilio_client.messages.create({
       body: `${info.warning} detected ${user.textECAfter} minutes ago with no response since.`,
-      from: process.env.PHONE_NUMBER,
+      from: env.TWILIO_PHONE_NUMBER,
       to: user.phoneNumber,
     });
   };
