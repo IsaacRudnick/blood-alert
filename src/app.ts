@@ -1,8 +1,9 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import logger from "morgan";
+import  morgan from "morgan";
 import * as env from "./util/secrets.js";
+import logger from "./util/logger.js";
 import mongoose from "mongoose";
 import routes from "./routes/routes.js";
 import sms_routes from "./routes/sms_routes.js";
@@ -15,13 +16,14 @@ const app = express();
 mongoose.set("strictQuery", true); //https://mongoosejs.com/docs/guide.html#strictQuery
 await mongoose.connect(env.DBURI);
 await app.listen(env.PORT); // listen for requests
+logger.info(`Server running on port ${env.PORT}`);
 
 /* =============================== Middleware =============================== */
 
 // register view engine
 app.set("view engine", "ejs");
 // show incoming requests in console (dev mode only)
-if (env.NODE_ENV == "dev") app.use(logger("dev"));
+if (env.NODE_ENV == "dev") app.use(morgan("dev"));
 // sets public folder (css, images, browser/client js, etc.)
 app.use(express.static("public"));
 // used to parse JSON bodies and replaces deprecated body-parser

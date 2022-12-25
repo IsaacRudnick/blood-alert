@@ -7,7 +7,7 @@ import fs from "fs";
 import logger from "./logger.js";
 
 if (fs.existsSync(".env")) {
-  logger.info("Using .env file to supply config environment variables");
+  logger.debug("Using .env file to supply config environment variables");
   dotenv.config();
 } else {
   logger.error(".env file not found. Please create one, following example in .env.example");
