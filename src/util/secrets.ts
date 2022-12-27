@@ -49,34 +49,3 @@ if (!OAUTH_CLIENT_ID) {
   logger.error("No OAuth client ID. Set OAUTH_CLIENT_ID environment variable.");
   logger.end();
 }
-
-export const FIREBASE: any = {
-  API_KEY: process.env.FIREBASE_API_KEY,
-  AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-  PROJECTID: process.env.FIREBASE_PROJECTID,
-  STORAGEBUCKET: process.env.FIREBASE_STORAGEBUCKET,
-  MESSAGINGSENDERID: process.env.FIREBASE_MESSAGINGSENDERID,
-  APPID: process.env.FIREBASE_APPID,
-  MEASUREMENTID: process.env.FIREBASE_MEASUREMENTID,
-};
-if (
-  !FIREBASE.API_KEY ||
-  !FIREBASE.AUTH_DOMAIN ||
-  !FIREBASE.PROJECTID ||
-  !FIREBASE.STORAGEBUCKET ||
-  !FIREBASE.MESSAGINGSENDERID ||
-  !FIREBASE.APPID ||
-  !FIREBASE.MEASUREMENTID
-) {
-  logger.error(
-    "Missing one or more firebase credentials. Set \
-    FIREBASE_API_KEY, \
-    FIREBASE_AUTH_DOMAIN, \
-    FIREBASE_PROJECTID, \
-    FIREBASE_STORAGEBUCKET, \
-    FIREBASE_MESSAGINGSENDERID, \
-    FIREBASE_APPID, and \
-    FIREBASE_MEASUREMENTID environment variables."
-  );
-  logger.end();
-}

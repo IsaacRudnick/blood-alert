@@ -21,7 +21,7 @@
         function signOut() {
           gapi.auth2
             .init({
-              client_id: "931638414558-j7n73fhlap5mo2euigehbuguo40vka0j.apps.googleusercontent.com",
+              client_id: "<%= GOOGLE_CLIENT_ID %>",
             })
             .then(() => {
               var auth2 = gapi.auth2.getAuthInstance();

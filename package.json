@@ -19,13 +19,12 @@
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "firebase": "^9.15.0",
     "google-auth-library": "^8.7.0",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.1",
     "mongoose": "^6.2.7",
     "node-fetch": "^3.3.0",
-    "toad-scheduler": "^2.1.0",
+    "toad-scheduler": "^2.1.1",
     "twilio": "^3.75.1",
     "validator": "^13.7.0",
     "winston": "^3.8.2",
@@ -33,7 +32,7 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@types/node": "^18.11.17",
+    "@types/node": "^18.11.18",
     "copyfiles": "^2.4.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",

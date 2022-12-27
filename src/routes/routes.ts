@@ -40,7 +40,7 @@ router.post("/profile", authenticateToken, controller.profile_post);
 
 //404 (Final route)
 router.use((req, res) => {
-  res.status(404).render("404", { title: "404", firebase: env.FIREBASE });
+  res.status(404).render("404", { title: "404" });
 });
 
 export default router;
