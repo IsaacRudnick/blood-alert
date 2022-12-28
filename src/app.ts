@@ -11,7 +11,7 @@ import sms_routes from "./routes/sms_routes.js";
 const app = express();
 
 // run checker in background
-// import "./checker/checker.js";
+import "./checker/checker.js";
 
 mongoose.set("strictQuery", true); //https://mongoosejs.com/docs/guide.html#strictQuery
 await mongoose.connect(env.DBURI);

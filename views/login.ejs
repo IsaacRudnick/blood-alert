@@ -5,21 +5,31 @@
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="google-signin-client_id"
-      content="<%= OAUTH_CLIENT_ID %>"
-    />
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   </head>
 
   <body>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      window.onload = function () {
+        google.accounts.id.initialize({
+          client_id: "<%= OAUTH_CLIENT_ID %>",
+          callback: onSignIn,
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("buttonDiv"),
+          { theme: "outline", size: "large" } // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+      };
+    </script>
+    <div id="buttonDiv"></div>
 
     <script>
-      function onSignIn(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
+      function onSignIn(response) {
+        var id_token = response.credential;
 
         fetch("/login", {
           method: "POST",

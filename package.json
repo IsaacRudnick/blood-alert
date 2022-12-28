@@ -4,6 +4,9 @@
   "description": "",
   "main": "app.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.12.1"
+  },
   "scripts": {
     "quick-start": "yarn nodemon --watch src --exec yarn ts-node-esm src/app.ts",
     "start": "node dist/app.js",
