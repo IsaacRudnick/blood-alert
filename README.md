@@ -1,6 +1,6 @@
 # Blood Alert
 
-This application is designed with the goal of offering diabetics the option of having an emergency contact (EC)alerted when the diabetic's blood sugar is out of range (OOR), but without needing constant false-positives (i.e. OOR but diabetic is aware and fine, and so alerting emergency contact is uneeded) by first checking with the diabetic and, only in the instance that they don't respond, alerting the EC.
+This application is designed with the goal of offering diabetics the option of having an emergency contact (EC)alerted when the diabetic's blood sugar is out of range (OOR), but without needing constant false-positives (i.e. OOR but diabetic is aware and fine, and so alerting emergency contact is unneeded) by first checking with the diabetic and, only in the instance that they don't respond, alerting the EC.
 
 You can _run_ the program by typing `node app` in the terminal. This program does not resolve. It listens for web requests and updates users indefinitely.
 
