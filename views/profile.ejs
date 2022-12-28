@@ -3,25 +3,14 @@
   <head>
     <%- include("./partials/header.ejs") %>
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
 
-  <body onload="init()">
+  <body>
     <main>
       <h1>Profile page</h1>
-      <script>
-        function init() {
-          gapi.load("auth2", () => {
-            /* Ready. Make a call to gapi.auth2.init or some other API */
-          });
-        }
-      </script>
 
-      <a href="#" onclick="signOut();">Sign out</a>
-      <script>
-        function signOut() {
-          document.location.href = "/logout";
-        }
-      </script>
+      <button onclick="window.location.href = '/logout'">Sign out</button>
 
       <h1>Hi, <%= user.email %>!</h1>
 
@@ -63,7 +52,7 @@
           value="<%= user?.dataSource ?? 'example-bg.herokuapp.com?'%>"
         /><br />
 
-        <button type="submit">submit</button>
+        <button type="submit">Submit</button>
       </form>
     </main>
 
