@@ -11,11 +11,11 @@ import logger from "../util/logger.js";
 
 /* ============================== GET REQUESTS ============================== */
 const index_get = async (req, res) => {
-  res.render("index", { title: "Home" });
+  res.render("index", { title: "Home", OAUTH_CLIENT_ID: CLIENT_ID, agent: req.useragent });
 };
 
 const login_get = async (req, res) => {
-  res.render("login", { title: "Login", OAUTH_CLIENT_ID: CLIENT_ID });
+  res.render("login", { title: "Login", OAUTH_CLIENT_ID: CLIENT_ID, agent: req.useragent });
 };
 
 // Clears cookies and redirects to /login
@@ -29,7 +29,7 @@ const profile_get = async (req, res) => {
   // Checks user ID using JWT
   // Find user and pre fill profile.ejs form with info
   let user: UserObj = await User.findById({ _id: id });
-  res.render("profile", { title: "Profile", user: user, OAUTH_CLIENT_ID: CLIENT_ID });
+  res.render("profile", { title: "Profile", user: user, OAUTH_CLIENT_ID: CLIENT_ID, agent: req.useragent });
 };
 
 /* ============================== POST REQUESTS ============================= */
@@ -93,7 +93,12 @@ const profile_post = async (req, res) => {
     let user: UserObj = await User.findByIdAndUpdate(req.id, validated_input, options).lean();
 
     logger.debug("Updated user: ", user);
-    res.render("profile", { title: "Profile", user: user });
+    res.render("profile", {
+      title: "Profile",
+      user: user,
+      OAUTH_CLIENT_ID: CLIENT_ID,
+      agent: req.useragent,
+    });
   }
   // If error, send error message to client
   else {

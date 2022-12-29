@@ -40,7 +40,9 @@ router.post("/profile", authenticateToken, controller.profile_post);
 
 //404 (Final route)
 router.use((req, res) => {
-  res.status(404).render("404", { title: "404" });
+  res
+    .status(404)
+    .render("404", { title: "404", OAUTH_CLIENT_ID: env.OAUTH_CLIENT_ID, agent: req.headers["user-agent"] });
 });
 
 export default router;

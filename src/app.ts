@@ -7,6 +7,7 @@ import logger from "./util/logger.js";
 import mongoose from "mongoose";
 import routes from "./routes/routes.js";
 import sms_routes from "./routes/sms_routes.js";
+import useragent from "express-useragent";
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // block cross-origin requests
 app.use(cors());
+//
+app.use(useragent.express());
 /* ========================================================================== */
 
 app.use("/sms-reply", sms_routes);
