@@ -1,6 +1,6 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <div id="g_id_onload" data-client_id="<%= OAUTH_CLIENT_ID %>" data-callback="onSignIn" data-auto_prompt="false"></div>
-
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
   function onSignIn(response) {
     var id_token = response.credential;
@@ -14,10 +14,22 @@
       body: JSON.stringify({ id_token }),
     })
       .then((res) => {
-        if (res.redirected == true) {
+        if (res.redirected) {
           location.assign(res.url);
         }
       })
       .catch((err) => console.log(err));
   }
+
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "<%= OAUTH_CLIENT_ID %>",
+      callback: onSignIn,
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("GoogleSignInButton"),
+      { theme: "outline", size: "medium" } // customization attributes
+    );
+    google.accounts.id.prompt(); // also display the One Tap dialog
+  };
 </script>

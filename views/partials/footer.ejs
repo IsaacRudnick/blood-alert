@@ -1,3 +1,7 @@
-<div id="bottom-signin"><% if (agent.isMobile){ %> <%- include('./GoogleSignInButton.ejs') %> <% } %></div>
+<div id="bottom-signin">
+  <% if (agent.isMobile && title != 'Profile'){ %>
+  <div id="GoogleSignInButton"></div>
+  <% } %>
+</div>
 
-<footer style="width: 100%; text-align: center">Copyright &copy; Blood Sugar Alert 2021</footer>
+<!-- <footer style="width: 100%; text-align: center">Copyright &copy; Blood Sugar Alert 2021</footer> -->

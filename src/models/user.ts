@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 interface IUser {
+  dataSource: string;
+  authToken: string;
   email: string;
   phoneNumber: string;
   highThreshold: number;
@@ -9,12 +11,15 @@ interface IUser {
   ECphoneNumber: string;
   textECAfter: number;
   snoozeMinutes: number;
-  dataSource: string;
 }
 
 //User will later add in other data or information
 const userSchema = new Schema<IUser>(
   {
+    //user data source (NS such as example-bg.herokuapp.com/)
+    dataSource: { type: String },
+    //user auth token for NS (not necessarily needed)
+    authToken: { type: String },
     // user email
     email: { type: String },
     // user's phone number
@@ -29,8 +34,6 @@ const userSchema = new Schema<IUser>(
     textECAfter: { type: Number },
     // How long to wait before checking on user again. Minutes
     snoozeMinutes: { type: Number },
-    //user data source (NS such as example-bg.herokuapp.com/)
-    dataSource: { type: String },
   },
   { timestamps: true }
 );

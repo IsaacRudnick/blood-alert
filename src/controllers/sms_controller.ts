@@ -4,7 +4,7 @@ import twilio from "twilio";
 import * as env from "../util/secrets.js";
 const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
-import { UserObj } from "../types.js";
+import { UserObj } from "../types/DBObjects.ts/types.js";
 import logger from "../util/logger.js";
 
 const reply_post = async (req, res) => {

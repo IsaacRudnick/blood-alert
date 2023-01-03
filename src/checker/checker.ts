@@ -7,7 +7,7 @@ import Case from "../models/case.js";
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 const scheduler = new ToadScheduler();
 import fetch from "node-fetch";
-import { UserObj, CaseObj } from "../types.js";
+import { UserObj, CaseObj } from "../types/DBObjects.ts/types.js";
 
 /**
  * This function:
@@ -25,12 +25,15 @@ async function recreate_cases() {
     // "case" is reserved in JS so "case_" is used instead
     let case_: CaseObj = cases[i];
     // Get the user associated with the case
-    let user: UserObj = await User.findById({ _id: case_.userID });
+    // User won't be null but TS doesn't know that
+    let user: UserObj | null = await User.findById({ _id: case_.userID });
     // Text user about outage
     await twilio_client.messages.create({
-      body: `Our service was interrupted during an active case for ${user.email}. Respond within ${user.textECAfter} minutes or your emergency contact will be notified.`,
+      body: `Our service was interrupted during an active case for ${user!.email}. Respond within ${
+        user!.textECAfter
+      } minutes or your emergency contact will be notified.`,
       from: env.TWILIO_PHONE_NUMBER,
-      to: user.phoneNumber,
+      to: user!.phoneNumber,
     });
     // Delete old case from DB
     await Case.deleteOne({ _id: case_._id });
@@ -51,7 +54,8 @@ async function recreate_cases() {
  * @param {Object} info - {warning: string}
  * @param {boolean} text_user - whether or not to text the user
  */
-async function create_new_case(user, info, text_user: boolean = true) {
+// TODO: Add types for user and info objects
+async function create_new_case(user: any, info: any, text_user: boolean = true) {
   // Text user if text_user is true
   if (text_user) {
     await twilio_client.messages.create({
@@ -74,7 +78,7 @@ async function create_new_case(user, info, text_user: boolean = true) {
     // Check if user has responded (if they have, the case will be deleted in the DB)
     let case_info = await Case.deleteOne({ _id: case_._id });
 
-    if (case_info.deletedCount == 0) {
+    if (case_info.deletedCount === 0) {
       return;
     }
     // If user hasn't responded, text EC
@@ -120,7 +124,7 @@ async function check_all_bgs() {
     // Otherwise, do standard checks
     let url: string = "https://" + user.dataSource + "/api/v2/entries.json";
     // Get user BG
-    let json = await (await fetch(url, { method: "GET" })).json();
+    let json: any = await (await fetch(url, { method: "GET" })).json();
     // Output user BG
     logger.debug(`${user.email}'s BG is ${json[0]["sgv"]}`);
 

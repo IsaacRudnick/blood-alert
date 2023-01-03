@@ -91,7 +91,7 @@ let options: Options = {
 };
 
 // If in development mode, also log to the console and save debug logs to files
-if (NODE_ENV == "dev") {
+if (NODE_ENV === "dev") {
   // Add the debug file to the transports
   options.transports.push(dailyRotaterFiles.debug);
   // Add the console to the transports

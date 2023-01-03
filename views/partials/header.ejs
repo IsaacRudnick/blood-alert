@@ -2,9 +2,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!-- <script defer src="consoleWarn.js"></script> -->
-<!-- <link rel="stylesheet" href="/styles.css" /> -->
-<!-- <link rel="stylesheet" href="/navbar.css" /> -->
-<%- include('./googleSignInSetup.ejs') %>
+<link rel="stylesheet" href="/styles.css" />
+<!-- only do signin setup if not on profile page -->
+<% if (title != 'Profile'){ %> <%- include('./googleSignInSetup.ejs') %> <% } %>
 <title>Blood Alert | <%= title %></title>
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -13,14 +13,41 @@
   crossorigin="anonymous"
 />
 
-<div class="navbar">
-  <!-- Links on left of navbar -->
-  <a href="mailto:bloodsugaralertdev@gmail.com">Contact</a>
-  <a href="https://github.com/InformationlessUsername/blood-alert">Source</a>
-
-  <!-- Signin on right of navbar -->
-  <div id="navbar-signin"><% if (!agent.isMobile){ %> <%- include('./GoogleSignInButton.ejs') %> <% } %></div>
-</div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Blood Alert</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:bloodsugaralertdev@gmail.com">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="https://github.com/InformationlessUsername/blood-alert"
+            >Source Code
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-auto">
+          <% if (!agent.isMobile && title != 'Profile'){ %>
+          <div id="GoogleSignInButton"></div>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

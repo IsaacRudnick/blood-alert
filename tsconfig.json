@@ -5,6 +5,7 @@
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "dist",
+    "strict": true,
     // "esModuleInterop": true,
     "noEmit": true
   },
