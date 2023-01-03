@@ -8,7 +8,6 @@ declare global {
     export interface Request {
       id?: string;
       body?: any;
-      userAgent: Agent;
     }
   }
 }

@@ -7,7 +7,7 @@ const CLIENT_ID = env.OAUTH_CLIENT_ID;
 const oauth2_client = new OAuth2Client(CLIENT_ID);
 import User from "../models/user.js";
 import logger from "../util/logger.js";
-import { UserObj } from "../types/DBObjects/index.js";
+import { UserObj } from "../@types/DBObjects/index.js";
 import { QueryOptions } from "mongoose";
 
 //ROUTING
@@ -71,7 +71,7 @@ const profile_post = async (req: Request, res: Response) => {
 
   // Only call updateUser if all checks pass
   if (
-    // Note these function types are defined in this project (/types/validator/index.d.ts)
+    // Note these function types are defined in this project (@types/validator/index.d.ts)
     validator.isURL(dataSource) &&
     validator.isMobilePhone(phoneNumber, "any", { strictMode: true }) &&
     validator.isInt(highThreshold, { min: 1, max: 400 }) &&

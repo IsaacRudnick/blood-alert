@@ -1,17 +1,18 @@
+import { Request, Response } from "express";
 import Case from "../models/case.js";
 import User from "../models/user.js";
 import twilio from "twilio";
 import * as env from "../util/secrets.js";
 const twilio_client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
 import moment from "moment";
-import { UserObj } from "../types/DBObjects.ts/types.js";
+import { UserObj } from "../@types/DBObjects/index.js";
 import logger from "../util/logger.js";
 
-const reply_post = async (req, res) => {
+const reply_post = async (req: Request, res: Response) => {
   // Validate the POST is from twilio
   const isFromTwilio: boolean = twilio.validateRequest(
     env.TWILIO_AUTH_TOKEN,
-    req.headers["x-twilio-signature"],
+    req.headers["x-twilio-signature"] as string,
     "https://www.blood-alert.com/reply",
     req.body
   );
@@ -19,9 +20,8 @@ const reply_post = async (req, res) => {
     res.send("Nice try!");
     logger.info("SMS API request NOT from twilio!");
   }
-
   // Get user associated with phone number that sent the reply
-  let user: UserObj = await User.findOne({ phoneNumber: req.body.From });
+  let user: UserObj | null = await User.findOne({ phoneNumber: req.body.From });
   // if phone number is not in DB, end
   if (!user) {
     res.end();

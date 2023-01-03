@@ -7,7 +7,7 @@ import Case from "../models/case.js";
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from "toad-scheduler";
 const scheduler = new ToadScheduler();
 import fetch from "node-fetch";
-import { UserObj, CaseObj } from "../types/DBObjects.ts/types.js";
+import { UserObj, CaseObj } from "../@types/DBObjects/index.js";
 
 /**
  * This function:
