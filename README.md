@@ -47,41 +47,41 @@ not important to the understanding of the program, self-explanatory, or automati
 For example, `views/404.ejs` does not need to be explicitly stated to be the 404 page.
 
 > [src](src/) - code for the application
-> │ [app.ts](src/app.ts) - entry point for the program
-> │
-> ├───[@types](src/@types/) - typescript type definitions
-> │  
-> ├───[checker](src/checker/) - the continual user-checking functionality of the program
-> │ checker.ts - the main file for the checker functionality
-> │
-> ├───[controllers](src/controllers/) - the controllers for the web requests
-> │ controller.ts - handles the logic for the web requests
-> │ sms_controller.ts - handles sms webhook requests (when user responds, this controller handles the webhook from Twilio)
-> │
-> ├───[routes](src/routes/)
-> │ routes.ts - the routes for user web requests
-> │ sms_routes.ts - the routes for the sms webhook requests
-> │
-> ├───[models](src/models/) - the models for the DB
-> │ case.ts - the model for a case (a case is a user's OOR blood sugar) in the DB
-> │ user.ts - the model for a user in the DB
-> │
-> ├───[util](src/util/) - utility files
-> │ logger.ts - a logger for the program. See more in [Logging](#logging)
-> │ secrets.ts - handles the secrets for the program (e.g. Twilio API keys) by pulling them from the .env file and making them available to the program. Ensures appropriate secrets are available before the program starts and throws an error if they are not.
-
-> [views](views/) - the views for the web requests through [EJS](https://ejs.co/)
-> │ 404.ejs - the 404 page
-> │ index.ejs - the home page
-> │ profile.ejs - the profile page
-> │ template.ejs - the template for the other pages
-> │
-> ├───[partials](views/partials/) - Article on [EJS partials](https://medium.com/@henslejoseph/ejs-partials-f6f102cb7433)
-> │ footer.ejs - the footer for the pages
-> │ GoogleSignInSetup.ejs - Imports the Google sign-in script and sets up the sign-in button
-> │ header.ejs - the header for the pages
-> │  
-> ├───[public](views/public/) - the public files for the web requests (images, css, js, etc.)
-> │ consoleWarn.js - a script that warns the user not to paste anything into the console (to prevent JWT theft)
-> │ NightscoutURLutils.js - a script that handles the Nightscout URL input on the profile page
+> │ [app.ts](src/app.ts) - entry point for the program \
+> │ \
+> ├───[@types](src/@types/) - typescript type definitions \
+> │ \
+> ├───[checker](src/checker/) - the continual user-checking functionality of the program \
+> │ checker.ts - the main file for the checker functionality \
+> │ \
+> ├───[controllers](src/controllers/) - the controllers for the web requests \
+> │ controller.ts - handles the logic for the web requests \
+> │ sms_controller.ts - handles sms webhook requests (when user responds, this controller handles the webhook from Twilio) \
+> │ \
+> ├───[routes](src/routes/) \
+> │ routes.ts - the routes for user web requests \
+> │ sms_routes.ts - the routes for the sms webhook requests \
+> │ \
+> ├───[models](src/models/) - the models for the DB \
+> │ case.ts - the model for a case (a case is a user's OOR blood sugar) in the DB \
+> │ user.ts - the model for a user in the DB \
+> │ \
+> ├───[util](src/util/) - utility files \
+> │ logger.ts - a logger for the program. See more in [Logging](#logging) \
+> │ secrets.ts - handles the secrets for the program (e.g. Twilio API keys) by pulling them from the .env file and making them available to the program. Ensures appropriate secrets are available before the program starts and throws an error if they are not. \
+>  \
+> [views](views/) - the views for the web requests through [EJS](https://ejs.co/) \
+> │ 404.ejs - the 404 page \
+> │ index.ejs - the home page \
+> │ profile.ejs - the profile page \
+> │ template.ejs - the template for the other pages \
+> │ \
+> ├───[partials](views/partials/) - Article on [EJS partials](https://medium.com/@henslejoseph/ejs-partials-f6f102cb7433) \
+> │ footer.ejs - the footer for the pages \
+> │ GoogleSignInSetup.ejs - Imports the Google sign-in script and sets up the sign-in button \
+> │ header.ejs - the header for the pages \
+> │ \
+> ├───[public](views/public/) - the public files for the web requests (images, css, js, etc.) \
+> │ consoleWarn.js - a script that warns the user not to paste anything into the console (to prevent JWT theft) \
+> │ NightscoutURLutils.js - a script that handles the Nightscout URL input on the profile page \
 > │ styles.css - the css for the pages
